@@ -1,0 +1,7 @@
+#game{
+  min-height: 100vh;
+  background-image: url("../../../../src/assets/Background/table_top.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}

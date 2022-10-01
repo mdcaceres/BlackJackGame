@@ -13,7 +13,7 @@ export class GameService {
                          {suit:"S",value:"4"},{suit:"S",value:"5"},{suit:"S",value:"6"},
                          {suit:"S",value:"7"},{suit:"S",value:"J"}];*/
  
-   apiUrl=environment.url
+   apiUrl=environment.url;
 
   constructor(private http:HttpClient) { }
 

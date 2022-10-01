@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { card } from '../card';
-import { DeckService } from '../deck.service';
+import { card } from '../interfaces/card';
+import { DeckService } from '../services/deck.service';
 
 @Component({
   selector: 'app-table',

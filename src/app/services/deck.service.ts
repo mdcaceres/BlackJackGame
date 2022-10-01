@@ -1,6 +1,6 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { card } from './card';
+import { card } from '../interfaces/card';
 
 @Injectable({
   providedIn: 'root'

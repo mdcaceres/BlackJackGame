@@ -1,6 +1,7 @@
 export interface card{
-    suit: string;
+    suite: string;
     value: string;
     position?:{x:number,y:number}; 
     image:HTMLImageElement;
+    path: string;
 }

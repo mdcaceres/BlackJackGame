@@ -32,7 +32,7 @@ export class TableComponent implements OnInit {
       next:(cards:card[]) => {
         for(const card of cards){
           const n = new Image();
-          n.src = "./assets/Cards/"+card.suit+"-"+card.value+".png";
+          n.src = "./assets/Cards/"+card.suite+"-"+card.value+".png";
           //this.cardsImages.push(n);
           card.image = n;
         }

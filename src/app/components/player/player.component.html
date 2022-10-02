@@ -1,10 +1,10 @@
 <div *ngIf="!player.isCroupier">
     <ul *ngFor="let item of player.gameCards">
-        <li></li>
+        <li><img src={{item.path}} alt=""></li>
     </ul>
 </div>
 <div *ngIf="player.isCroupier">
     <ul *ngFor="let item of croupier.gameCards">
-        <li></li>
+        <li><img src={{item.path}} alt=""></li>
     </ul>
 </div>

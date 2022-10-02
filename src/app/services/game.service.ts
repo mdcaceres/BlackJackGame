@@ -55,10 +55,9 @@ calculatePoints(deck: card[], asValue: boolean):number{
    for (const card of deckCards) {
 
        if(card.value == 'J' || card.value == 'Q' || card.value == 'K'){
-        points += 10;
-        break;
+        points += 10
        }
-       if(card.value == 'A'){
+       else if(card.value == 'A'){
         points += asCard
        }
        else{

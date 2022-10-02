@@ -1,42 +1,43 @@
 <section id="game" class="content-fluid">
 
-<div id="currierComponent">
-  <app-player></app-player>
-<p>
-    currier
-</p>
-<!--<span id="points" class="rounded-circle">
+  <div id="currierComponent">
+    <app-croupier></app-croupier>
+    <p>
+      croupier
+    </p>
+    <!--<span id="points" class="rounded-circle">
     21
 </span>-->
-</div>
-<div id="playerComponent">
-<app-player></app-player>
-<span id="points" class="rounded-circle">
-  21  
-</span>
-</div>
+  </div>
+  <div id="playerComponent">
+    <app-player></app-player>
+    <span id="points" class="rounded-circle">
+      21
+    </span>
+  </div>
 
 
-<!-- Navbar -->
-<nav class="navbar navbar-dark shadow-5-strong">
-      <!-- Navbar player
+  <!-- Navbar -->
+  <nav class="navbar navbar-dark shadow-5-strong">
+    <!-- Navbar player
       <a class="navbar-brand" href="#">Player</a>
         -->
-      <ul class="nav">
-        <li>
-          <a href="#">
-            <span class="icon-hit" (click)="send()"></span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <span class="icon-hold"></span>
-          </a></li>
-        <li>
-          <a href="#">
-            <span class="icon-skull"></span>
-          </a>
-        </li>
+    <ul class="nav">
+      <li>
+        <a href="#">
+          <span class="icon-hit" (click)="send()"></span>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <span class="icon-hold"></span>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <span class="icon-skull"></span>
+        </a>
+      </li>
     </ul>
   </nav>
   <!-- Navbar -->

@@ -8,41 +8,27 @@ import { player } from 'src/app/interfaces/player';
   styleUrls: ['./player.component.css'],
 })
 export class PlayerComponent implements OnInit {
-  player: player;
-  croupier: player;
-  counter: number = 0;
+  player: player= { gameCards: [] as card[]} as player;
   constructor() {
-    this.player = { gameCards: [] as card[]} as player;
-    this.croupier = {gameCards: [] as card[]} as player;
   }
 
   ngOnInit(): void {}
 
-  askForCard(card: card, isCroupier: boolean) {
+  askForCard(card: card) {
     if(typeof card === "undefined"){
       return;
     }
-    console.log(card);
-    isCroupier
-      ? this.croupier.gameCards.push(card)
-      : this.player.gameCards.push(card);
-
-    console.log(this.player.gameCards)
-    console.log(this.player.gameCards[0].image)
-    this.counter++;
+    this.player.gameCards.push(card);
   }
 
   stopPlaying() {
     return {
-      playerCards: this.player.gameCards,
-      croupierCards: this.croupier.gameCards,
+      playerCards: this.player.gameCards
     };
   }
 
   getPlayerCards() {
     return this.player.gameCards;
   }
-  getCroupierCards() {
-    return this.croupier.gameCards;
-  }
+  
 }

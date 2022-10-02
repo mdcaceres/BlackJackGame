@@ -10,6 +10,7 @@ import {
 import { Subscription } from 'rxjs';
 import { card } from 'src/app/interfaces/card';
 import { GameService } from 'src/app/services/game.service';
+import { CroupierComponent } from '../croupier/croupier.component';
 import { PlayerComponent } from '../player/player.component';
 
 @Component({
@@ -20,8 +21,11 @@ import { PlayerComponent } from '../player/player.component';
 export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
   private deck: card[] = [];
   private sub: Subscription = new Subscription();
-  private card: card = {} as card;
-  @ViewChild(PlayerComponent) child!: PlayerComponent;
+  private cardPlayer: card = {} as card;
+  private cardCroupier: card = {} as card;
+  private counter: number = 0;
+  @ViewChild(PlayerComponent) childPlayer!: PlayerComponent;
+  @ViewChild(CroupierComponent) childCroupier!: CroupierComponent;
 
   constructor(private gameService: GameService) {}
 
@@ -54,12 +58,22 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   send(): void {
+    this.counter++;
     let result = this.deck.pop();
 
     if(result){
-      this.card = result;
+      this.cardPlayer = result;
     }
 
-    this.child.askForCard(this.card, false);
+    this.childPlayer.askForCard(this.cardPlayer);   
+
+    if(this.counter >= 2){
+      let result = this.deck.pop();
+
+      if(result){
+        this.cardCroupier = result;
+      }
+      this.childCroupier.askForCard(this.cardCroupier);
+    }
   }
 }

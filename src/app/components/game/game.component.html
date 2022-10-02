@@ -11,9 +11,7 @@
   </div>
   <div id="playerComponent">
     <app-player></app-player>
-    <span id="points" class="rounded-circle">
-      21
-    </span>
+    <span id="points" class="rounded-circle"></span>
   </div>
 
 
@@ -30,7 +28,7 @@
       </li>
       <li>
         <a href="#">
-          <span class="icon-hold"></span>
+          <span class="icon-hold" (click)="hold()"></span>
         </a>
       </li>
       <li>

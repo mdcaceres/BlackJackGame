@@ -23,6 +23,8 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
   private sub: Subscription = new Subscription();
   private cardPlayer: card = {} as card;
   private cardCroupier: card = {} as card;
+   playerPoints!: number
+  private croupierPoints!: number;
   private counter: number = 0;
   @ViewChild(PlayerComponent) childPlayer!: PlayerComponent;
   @ViewChild(CroupierComponent) childCroupier!: CroupierComponent;
@@ -64,9 +66,14 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
     if(result){
       this.cardPlayer = result;
     }
+    this.childPlayer.askForCard(this.cardPlayer);  
+    this.sendCroupier(); 
 
-    this.childPlayer.askForCard(this.cardPlayer);   
+    this.playerPoints = this.gameService.calculatePoints(this.childPlayer.getPlayerCards(),true);
+    this.croupierPoints = this.gameService.calculatePoints(this.childCroupier.getCroupierCards(),true);
+  }
 
+  sendCroupier():void{
     if(this.counter >= 2){
       let result = this.deck.pop();
 
@@ -75,5 +82,21 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       this.childCroupier.askForCard(this.cardCroupier);
     }
+  }
+
+  hold():void{
+    this.playerPoints = this.gameService.calculatePoints(this.childPlayer.getPlayerCards(),true);
+    this.croupierPoints = this.gameService.calculatePoints(this.childCroupier.getCroupierCards(),true);
+    if(this.croupierPoints < 17){
+      this.sendCroupier();
+      this.croupierPoints = this.gameService.calculatePoints(this.childCroupier.getCroupierCards(),true);
+    }
+
+    let result = this.gameService.verifyWinner(this.playerPoints,this.croupierPoints);
+
+    //result ? alert("gano jugador") : result == null ? alert("empate") : alert("perdio"); 
+
+    alert(result);
+
   }
 }

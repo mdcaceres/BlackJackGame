@@ -1,6 +1,7 @@
 <section id="game" class="content-fluid">
 
 <div id="currierComponent">
+  <app-player></app-player>
 <p>
     currier
 </p>
@@ -9,9 +10,9 @@
 </span>-->
 </div>
 <div id="playerComponent">
-<p>player component</p>
+<app-player></app-player>
 <span id="points" class="rounded-circle">
-    21
+  21  
 </span>
 </div>
 
@@ -24,7 +25,7 @@
       <ul class="nav">
         <li>
           <a href="#">
-            <span class="icon-hit"></span>
+            <span class="icon-hit" (click)="send()"></span>
           </a>
         </li>
         <li>

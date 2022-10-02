@@ -19,7 +19,7 @@ export class GameService {
     return this.http.get<card[]>(url, {headers:headers})
 
   }
-    
+
   verifyWinner(pointsPlayer:number, pointsCroupier:number){
 
     let playerWin= null;

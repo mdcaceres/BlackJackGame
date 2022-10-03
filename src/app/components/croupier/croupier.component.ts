@@ -23,4 +23,8 @@ export class CroupierComponent implements OnInit {
   getCroupierCards() {
     return this.croupier.gameCards;
   }
+
+  reset(){
+    this.croupier.gameCards = [];
+  }
 }

@@ -1,17 +1,22 @@
 <section id="game" class="content-fluid">
+  <button (click)="start()">start</button>
 
   <div id="currierComponent">
     <app-croupier></app-croupier>
     <p>
       croupier
     </p>
-    <!--<span id="points" class="rounded-circle">
-    21
-</span>-->
+    <span id="points" class="rounded-circle">
+      {{croupierPoints}}
+    </span>
   </div>
+
+
   <div id="playerComponent">
     <app-player></app-player>
-    <span id="points" class="rounded-circle"></span>
+    <span id="points" class="rounded-circle">
+      {{playerPoints}}
+    </span>
   </div>
 
 
@@ -33,7 +38,7 @@
       </li>
       <li>
         <a href="#">
-          <span class="icon-skull"></span>
+          <span class="icon-skull" (click)="reset()"></span>
         </a>
       </li>
     </ul>

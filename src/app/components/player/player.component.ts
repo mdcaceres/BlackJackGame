@@ -30,5 +30,9 @@ export class PlayerComponent implements OnInit {
   getPlayerCards() {
     return this.player.gameCards;
   }
+
+  reset(){
+    this.player.gameCards = [];
+  }
   
 }

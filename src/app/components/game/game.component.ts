@@ -69,18 +69,25 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
       confirmButtonText: 'Yes, lets play it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.sendPlayer();
-        this.sendPlayer();
-        this.sendCroupier();
+        this.firstHand();
       }
-    })
+    }).then(()=>{this.updatePlayersPoints()})
+  }
 
+  firstHand():void{
+    this.sendPlayer();
+    this.sendPlayer();
+    this.sendCroupier();
   }
 
   send(): void {
     this.sendPlayer();
     this.sendCroupier(); 
+    this.playerPoints = this.gameService.calculatePoints(this.childPlayer.getPlayerCards(),true);
+    this.croupierPoints = this.gameService.calculatePoints(this.childCroupier.getCroupierCards(),true);
+  }
 
+  updatePlayersPoints():void{
     this.playerPoints = this.gameService.calculatePoints(this.childPlayer.getPlayerCards(),true);
     this.croupierPoints = this.gameService.calculatePoints(this.childCroupier.getCroupierCards(),true);
   }
@@ -111,8 +118,8 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
       this.sendCroupier();
       this.croupierPoints = this.gameService.calculatePoints(this.childCroupier.getCroupierCards(),true);
     }
-    this.playerPoints = this.gameService.calculatePoints(this.childPlayer.getPlayerCards(),true);
-    this.croupierPoints = this.gameService.calculatePoints(this.childCroupier.getCroupierCards(),true);
+    this.updatePlayersPoints();
+
     let result = this.gameService.verifyWinner(this.playerPoints,this.croupierPoints);
     setTimeout((e: any) => {
       if(result){
@@ -136,7 +143,6 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
         )
       }
       }, 1000);
-      
   }
 
   shuffleArray(array:card[]) {
@@ -150,11 +156,14 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   reset():void{
+    Swal.fire('New game ⚔️')
     this.childCroupier.reset();
     this.childPlayer.reset();
     this.loadDeck();
     this.playerPoints = 0;
-    this.croupierPoints = 0; 
+    this.croupierPoints = 0;
+    this.firstHand();
+    this.updatePlayersPoints();
   }
   
 }

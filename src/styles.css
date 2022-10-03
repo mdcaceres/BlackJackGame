@@ -25,6 +25,12 @@ body{
     left: 110px;
 }
 
+#cardContainer{
+  display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .navbar {
     background-color: #333;
     overflow: hidden;

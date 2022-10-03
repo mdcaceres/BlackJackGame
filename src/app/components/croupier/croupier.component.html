@@ -1,5 +1,7 @@
-<div >
-    <ul *ngFor="let item of croupier.gameCards">
-        <li><img src={{item.path}} alt=""></li>
+<div>
+    <ul id="ul_inline">
+        <li *ngFor="let item of croupier.gameCards">
+            <img src={{item.path}} alt="">
+        </li>
     </ul>
 </div>

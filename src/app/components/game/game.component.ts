@@ -74,22 +74,30 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
     }).then(()=>{this.updatePlayersPoints()})
   }
 
+  checkPointsOverflow(){
+    if(this.playerPoints > 21){
+      this.resetWithMessage("you lost because you were over 21...a new game has started");
+    }
+  }
+
   firstHand():void{
     this.sendPlayer();
     this.sendPlayer();
     this.sendCroupier();
   }
 
+
+
   send(): void {
     this.sendPlayer();
     this.sendCroupier(); 
-    this.playerPoints = this.gameService.calculatePoints(this.childPlayer.getPlayerCards(),true);
-    this.croupierPoints = this.gameService.calculatePoints(this.childCroupier.getCroupierCards(),true);
+    this.updatePlayersPoints();
   }
 
   updatePlayersPoints():void{
     this.playerPoints = this.gameService.calculatePoints(this.childPlayer.getPlayerCards(),true);
     this.croupierPoints = this.gameService.calculatePoints(this.childCroupier.getCroupierCards(),true);
+    setTimeout((e: any) => {this.checkPointsOverflow()}, 100);
   }
 
   sendPlayer(){
@@ -157,6 +165,17 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
 
   reset():void{
     Swal.fire('New game ⚔️')
+    this.childCroupier.reset();
+    this.childPlayer.reset();
+    this.loadDeck();
+    this.playerPoints = 0;
+    this.croupierPoints = 0;
+    this.firstHand();
+    this.updatePlayersPoints();
+  }
+
+  resetWithMessage(message:string):void{
+    Swal.fire(message);
     this.childCroupier.reset();
     this.childPlayer.reset();
     this.loadDeck();

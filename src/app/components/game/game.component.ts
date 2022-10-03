@@ -12,6 +12,7 @@ import { card } from 'src/app/interfaces/card';
 import { GameService } from 'src/app/services/game.service';
 import { CroupierComponent } from '../croupier/croupier.component';
 import { PlayerComponent } from '../player/player.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-game',
@@ -23,8 +24,8 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
   private sub: Subscription = new Subscription();
   private cardPlayer: card = {} as card;
   private cardCroupier: card = {} as card;
-  playerPoints!: number
-  croupierPoints!: number;
+  playerPoints: number = 0;
+  croupierPoints: number = 0;
   private counter: number = 0;
   @ViewChild(PlayerComponent) childPlayer!: PlayerComponent;
   @ViewChild(CroupierComponent) childCroupier!: CroupierComponent;
@@ -37,6 +38,7 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
   
   ngOnInit(): void {
     this.loadDeck();
+    this.start();
   }
   ngAfterViewInit() {}
 
@@ -45,9 +47,6 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
       this.gameService.getDeck().subscribe({
         next: (cards: card[]) => {
           for (const card of cards) {
-            // const n = new Image();
-            // n.src = '../../assets/Cards/' + card.suite + '-' + card.value + '.png';
-            // card.image = n;
             card.path = '../../assets/Cards/' + card.suite + '-' + card.value + '.png';
           }
           this.deck = this.shuffleArray(cards);
@@ -60,9 +59,22 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   start(){
-    this.sendPlayer();
-    this.sendPlayer();
-    this.sendCroupier();
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "start a new game",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, lets play it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.sendPlayer();
+        this.sendPlayer();
+        this.sendCroupier();
+      }
+    })
+
   }
 
   send(): void {
@@ -102,7 +114,29 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
     this.playerPoints = this.gameService.calculatePoints(this.childPlayer.getPlayerCards(),true);
     this.croupierPoints = this.gameService.calculatePoints(this.childCroupier.getCroupierCards(),true);
     let result = this.gameService.verifyWinner(this.playerPoints,this.croupierPoints);
-    setTimeout((e: any) => {alert(result)}, 1000);
+    setTimeout((e: any) => {
+      if(result){
+        Swal.fire(
+          'Your are amazing, a real champ 🤴',
+          'nice game',
+          'success'
+        )
+      }
+      else if(typeof result == null){
+        Swal.fire(
+          'try again',
+          'you and courprie are even',
+          'warning'
+        )
+      } else {
+        Swal.fire(
+          'try a little harder next time',
+          'You lost the game',
+          'error'
+        )
+      }
+      }, 1000);
+      
   }
 
   shuffleArray(array:card[]) {

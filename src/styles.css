@@ -17,13 +17,7 @@ body{
     justify-items: center;
 }
 
-#points{
-    background-color: aqua;
-    padding: 5px;
-    position: relative;
-    bottom: 80px;
-    left: 110px;
-}
+
 
 #cardContainer{
   display: flex;

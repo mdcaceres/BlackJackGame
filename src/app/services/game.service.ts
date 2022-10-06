@@ -25,13 +25,13 @@ export class GameService {
     let playerWin= null;
 
     const pPlayer=pointsPlayer;
-    const pCroupier=pointsCroupier
+    const pCroupier=pointsCroupier;
     
-    if(pPlayer>21){
+    if(pPlayer>21 || pCroupier> pPlayer){
       //player perdio
       playerWin=false;
     }
-    else if(pPlayer > pCroupier && pPlayer<=21){
+    else if(pPlayer > pCroupier && pPlayer<=21 || pCroupier>21){
        //player win
        playerWin=true;
     }
@@ -58,6 +58,7 @@ calculatePoints(deck: card[], asValue: boolean):number{
         points += 10
        }
        else if(card.value == 'A'){
+        if(points += asCard)
         points += asCard
        }
        else{

@@ -13,6 +13,7 @@ import { GameService } from 'src/app/services/game.service';
 import { CroupierComponent } from '../croupier/croupier.component';
 import { PlayerComponent } from '../player/player.component';
 import Swal from 'sweetalert2';
+import { ThisReceiver } from '@angular/compiler';
 
 @Component({
   selector: 'app-game',
@@ -60,13 +61,13 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
 
   start(){
     Swal.fire({
-      title: 'Are you sure?',
-      text: "start a new game",
+      title: 'Estas Seguro?',
+      text: "Comenzar un nuevo juego",
       icon: 'question',
-      showCancelButton: true,
+      showCancelButton: false,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, lets play it!'
+      confirmButtonText: 'Si, Juguemos'
     }).then((result) => {
       if (result.isConfirmed) {
         this.firstHand();
@@ -76,7 +77,15 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
 
   checkPointsOverflow(){
     if(this.playerPoints > 21){
-      this.resetWithMessage("you lost because you were over 21...a new game has started");
+      setTimeout((e: any) => {this.resetWithMessage('Te pasaste de 21! Suerte la proxima',
+      'La Casa Gana',
+      'error' );}, 1500);
+    }
+    if(this.croupierPoints > 21){
+      setTimeout((e: any) => {this.resetWithMessage('Ganaste! La casa se paso de 21 🤴',
+      'Buen juego',
+      'success');}, 1500);
+      
     }
   }
 
@@ -90,14 +99,16 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
 
   send(): void {
     this.sendPlayer();
-    this.sendCroupier(); 
     this.updatePlayersPoints();
+    if(this.playerPoints=21){
+      this.hold();
+    }
   }
 
   updatePlayersPoints():void{
     this.playerPoints = this.gameService.calculatePoints(this.childPlayer.getPlayerCards(),true);
     this.croupierPoints = this.gameService.calculatePoints(this.childCroupier.getCroupierCards(),true);
-    setTimeout((e: any) => {this.checkPointsOverflow()}, 100);
+    //setTimeout((e: any) => {this.checkPointsOverflow()}, 1500);
   }
 
   sendPlayer(){
@@ -122,35 +133,43 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   hold():void{
-    if(this.croupierPoints < 17){
+    while(this.croupierPoints < 17){
       this.sendCroupier();
       this.croupierPoints = this.gameService.calculatePoints(this.childCroupier.getCroupierCards(),true);
+      if(this.croupierPoints>21){
+        this.checkPointsOverflow();
+        return;
+      }
     }
     this.updatePlayersPoints();
 
-    let result = this.gameService.verifyWinner(this.playerPoints,this.croupierPoints);
+    let win = this.gameService.verifyWinner(this.playerPoints,this.croupierPoints);
+    
     setTimeout((e: any) => {
-      if(result){
+      if(win == true){
         Swal.fire(
-          'Your are amazing, a real champ 🤴',
-          'nice game',
+          'Ganaste! 🤴',
+          'Buen juego',
           'success'
         )
+        this.reset();
       }
-      else if(typeof result == null){
+      else if( win === null){
         Swal.fire(
-          'try again',
-          'you and courprie are even',
+          'Intenta de nuevo',
+          'Empataste con el croupier',
           'warning'
         )
-      } else {
+        this.reset();
+      }else{
         Swal.fire(
-          'try a little harder next time',
-          'You lost the game',
+          'Perdiste',
+          'La Casa Gana',
           'error'
         )
+        this.reset();
       }
-      }, 1000);
+      }, 1700);
   }
 
   shuffleArray(array:card[]) {
@@ -164,25 +183,26 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   reset():void{
-    Swal.fire('New game ⚔️')
+    //Swal.fire('Nuevo Juego ⚔️')
+    this.playerPoints = 0;
+    this.croupierPoints = 0;
     this.childCroupier.reset();
     this.childPlayer.reset();
     this.loadDeck();
-    this.playerPoints = 0;
-    this.croupierPoints = 0;
     this.firstHand();
     this.updatePlayersPoints();
   }
 
-  resetWithMessage(message:string):void{
-    Swal.fire(message);
+  resetWithMessage(message:string, content:string, messagetype:string |any):void{
+    Swal.fire(message,content,messagetype);
+    this.playerPoints = 0;
+    this.croupierPoints = 0;
     this.childCroupier.reset();
     this.childPlayer.reset();
     this.loadDeck();
-    this.playerPoints = 0;
-    this.croupierPoints = 0;
     this.firstHand();
     this.updatePlayersPoints();
+    this.reset();
   }
   
 }

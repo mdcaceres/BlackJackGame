@@ -13,7 +13,6 @@ import { GameService } from 'src/app/services/game.service';
 import { CroupierComponent } from '../croupier/croupier.component';
 import { PlayerComponent } from '../player/player.component';
 import Swal from 'sweetalert2';
-import { ThisReceiver } from '@angular/compiler';
 
 @Component({
   selector: 'app-game',
@@ -61,9 +60,9 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
 
   start(){
     Swal.fire({
-      title: 'Estas Seguro?',
-      text: "Comenzar un nuevo juego",
-      icon: 'question',
+      title: 'Comenzar un nuevo juego',
+      text: "",
+      icon: 'info',
       showCancelButton: false,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',

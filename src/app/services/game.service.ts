@@ -58,7 +58,6 @@ calculatePoints(deck: card[], asValue: boolean):number{
         points += 10
        }
        else if(card.value == 'A'){
-        if(points += asCard)
         points += asCard
        }
        else{

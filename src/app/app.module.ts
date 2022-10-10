@@ -8,6 +8,7 @@ import { GameComponent } from './components/game/game.component';
 import { PlayerComponent } from './components/player/player.component';
 import { CroupierComponent } from './components/croupier/croupier.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

@@ -1,0 +1,19 @@
+<div class="container text-light py-3">
+    <h1>Login</h1>
+    <form [formGroup]="formLogin" (ngSubmit)="login()" class="row py-3">
+        <div class="col md-6">
+               <label for="email" class="form-label"  >Email</label>
+               <input type="email" class="form-control"  formControlName="email" name="email" >
+        </div>
+        <div class="col-md-6">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" formControlName="password" name="password">
+        </div>
+        <div class="col-md-12 py-3">
+            <a routerLink="/auth/register">Or create account</a>
+        </div>
+        <div class="col-md-12 py-3">
+            <button type="button" class="btn btn-secondary" (click)="login()">Login</button>
+        </div>
+    </form>
+</div>

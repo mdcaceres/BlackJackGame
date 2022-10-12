@@ -3,11 +3,17 @@ import { CommonModule } from '@angular/common';
 
 import { MainRoutingModule } from './main-routing.module';
 import { LobbyComponent } from './lobby/lobby.component';
+import { GameComponent } from './game/game.component';
+import { PlayerComponent } from './player/player.component';
+import { CroupierComponent } from './croupier/croupier.component';
 
 
 @NgModule({
   declarations: [
-    LobbyComponent
+    LobbyComponent,
+    GameComponent,
+    PlayerComponent,
+    CroupierComponent
   ],
   imports: [
     CommonModule,

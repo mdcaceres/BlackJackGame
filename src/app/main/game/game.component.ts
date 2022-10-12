@@ -47,7 +47,7 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
       this.gameService.getDeck().subscribe({
         next: (cards: card[]) => {
           for (const card of cards) {
-            card.path = '../../assets/Cards/' + card.suite + '-' + card.value + '.png';
+            card.path = 'src/assets/Cards' + card.suite + '-' + card.value + '.png';
           }
           this.deck = this.shuffleArray(cards);
         },

@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  url:'https://63378fb95327df4c43d54e96.mockapi.io/api/blackjack/cards'
+  url:'https://63378fb95327df4c43d54e96.mockapi.io/api/blackjack/cards',
+  urlTestLogin:"https://localhost:7029/" //apidbPractica2
 };
 
 /*

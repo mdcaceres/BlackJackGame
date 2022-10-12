@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import {environment} from'src/environments/environment';
 
 interface Usuario{
   email:string,
@@ -12,7 +13,7 @@ interface Usuario{
 })
 export class AuthService {
 
-  urlApiBase: string= ""
+  urlApiBase: string= environment.urlTestLogin;
 
   constructor(private http:HttpClient){
 
@@ -20,19 +21,21 @@ export class AuthService {
 
   postLogin(data: Usuario): Observable<any>{
 
-      const url= this.urlApiBase;
+      const url= this.urlApiBase + "api/Usuario";
 
       const usuario= {
-          email: data.email,
-          password:data.password
+        nombredeUsuario: data.email,
+        password:data.password
       }
 
       const body= JSON.stringify(usuario);
 
       const headers= {'content-type': 'application/json'}
 
-     return  this.http.post(url, body, {'headers':headers});
+     return  this.http.post(url, body, {headers:headers});
 
   }
+
+  //return validateToken()
 
 }

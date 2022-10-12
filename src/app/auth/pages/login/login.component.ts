@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -24,16 +25,21 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-
-    this.authAPI.postLogin(this.formLogin.value).subscribe({
-                  next:()=>{
-
-                  },
-                  error:()=>{
-
+    this.authAPI.postLogin(this.formLogin.value).subscribe((response)=>{
+                  if(response.ok){
+                    console.log(response)
+                    localStorage.setItem('user', JSON.stringify(response))//acá sera el usuario, token,  lo que requiera.
+                    this.router.navigateByUrl('/game')
+                  }else{
+                    Swal.fire({
+                      title:"Error",
+                      icon:"error",
+                      text:response.error
+                    })
+                    console.log(response)
                   }
+                 
                 })
-    //this.router.navigateByUrl('/game')
   }
 
 }

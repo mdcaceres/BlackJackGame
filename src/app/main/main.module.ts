@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { GameRoutingModule } from './game-routing.module';
+import { MainRoutingModule } from './main-routing.module';
 import { LobbyComponent } from './lobby/lobby.component';
 
 
@@ -11,7 +11,7 @@ import { LobbyComponent } from './lobby/lobby.component';
   ],
   imports: [
     CommonModule,
-    GameRoutingModule
+    MainRoutingModule
   ]
 })
-export class GameModule { }
+export class MainModule { }

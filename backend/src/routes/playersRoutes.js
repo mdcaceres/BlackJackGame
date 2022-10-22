@@ -16,7 +16,7 @@ const {Player} = require ('../controllers/playersController');
 
  });
 
- router.post('/', async function (req,res) 
+ router.post('/register', async function (req,res) 
  {
    await Player.RegisterPlayer(req,res);
 

@@ -1,5 +1,5 @@
 const mysql = require('mysql2');
-const { promisify }= require('util'); //Para uso de async await porque el modulo nativo no lo soporta
+const { promisify }= require('util'); 
 
 const { database } = require('../config/config');
 

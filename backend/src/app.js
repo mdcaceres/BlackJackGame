@@ -12,8 +12,10 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 
 // Middlewares Routes
-app.use('/api/players', require('./routes/playersRoutes'));
+
 app.use('/api/cards', require('./routes/cardsRoutes'));
+app.use('/api/game', require('./routes/gameRoutes'));
+app.use('/api/players', require('./routes/playersRoutes'));
 
 app.listen(PORT, () => {
   console.log(`App listening on PORT ${PORT}`)

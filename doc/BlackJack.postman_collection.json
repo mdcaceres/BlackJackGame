@@ -79,7 +79,37 @@
 		},
 		{
 			"name": "Cards",
-			"item": []
+			"item": [
+				{
+					"name": "cards",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "cards/id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7466/api/cards/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7466",
+							"path": [
+								"api",
+								"cards",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Game",

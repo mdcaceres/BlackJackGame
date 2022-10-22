@@ -1,0 +1,89 @@
+{
+	"info": {
+		"_postman_id": "13799669-d91e-4a7d-bf3b-d62b84a5637c",
+		"name": "BlackJack",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20093382"
+	},
+	"item": [
+		{
+			"name": "Players",
+			"item": [
+				{
+					"name": "players",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7466/api/players",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7466",
+							"path": [
+								"api",
+								"players"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "players/id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "players/create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"name\":\"\",\r\n     \"email\":\"\",\r\n     \"password\": \"\"\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "players/login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7466/api/players/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7466",
+							"path": [
+								"api",
+								"players",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cards",
+			"item": []
+		},
+		{
+			"name": "Game",
+			"item": []
+		}
+	]
+}

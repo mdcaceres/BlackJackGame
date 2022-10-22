@@ -55,11 +55,11 @@ CREATE TABLE `games` (
   `idResultType` int NOT NULL,
   `idPlayer` int NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `FKresultType` (`idResultType`),
   KEY `FKplayer` (`idPlayer`),
+  KEY `FKresultType` (`idResultType`),
   CONSTRAINT `FKplayer` FOREIGN KEY (`idPlayer`) REFERENCES `players` (`id`),
   CONSTRAINT `FKresultType` FOREIGN KEY (`idResultType`) REFERENCES `resultTypes` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,6 +68,7 @@ CREATE TABLE `games` (
 
 LOCK TABLES `games` WRITE;
 /*!40000 ALTER TABLE `games` DISABLE KEYS */;
+INSERT INTO `games` VALUES (3,1,3);
 /*!40000 ALTER TABLE `games` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -88,7 +89,7 @@ CREATE TABLE `gamesDetails` (
   KEY `FKgame` (`idGame`),
   CONSTRAINT `FKcard` FOREIGN KEY (`idCard`) REFERENCES `cards` (`id`),
   CONSTRAINT `FKgame` FOREIGN KEY (`idGame`) REFERENCES `games` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,6 +98,7 @@ CREATE TABLE `gamesDetails` (
 
 LOCK TABLES `gamesDetails` WRITE;
 /*!40000 ALTER TABLE `gamesDetails` DISABLE KEYS */;
+INSERT INTO `gamesDetails` VALUES (3,1,3,0),(4,3,3,0);
 /*!40000 ALTER TABLE `gamesDetails` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -137,7 +139,7 @@ CREATE TABLE `resultTypes` (
   `id` int NOT NULL AUTO_INCREMENT,
   `description` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -146,6 +148,7 @@ CREATE TABLE `resultTypes` (
 
 LOCK TABLES `resultTypes` WRITE;
 /*!40000 ALTER TABLE `resultTypes` DISABLE KEYS */;
+INSERT INTO `resultTypes` VALUES (1,'pending'),(2,'win'),(3,'lost'),(4,'draw');
 /*!40000 ALTER TABLE `resultTypes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -182,4 +185,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-22  2:16:00
+-- Dump completed on 2022-10-22 19:02:20

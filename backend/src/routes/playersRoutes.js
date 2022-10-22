@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {Player} = require ('../controllers/playersControllers');
+const {Player} = require ('../controllers/playersController');
 
  router.get('/', async function (req,res) 
  {

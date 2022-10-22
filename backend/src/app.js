@@ -13,6 +13,7 @@ app.use(express.json());
 
 // Middlewares Routes
 app.use('/api/players', require('./routes/playersRoutes'));
+app.use('/api/cards', require('./routes/cardsRoutes'));
 
 app.listen(PORT, () => {
   console.log(`App listening on PORT ${PORT}`)

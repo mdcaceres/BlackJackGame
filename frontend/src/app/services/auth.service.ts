@@ -2,29 +2,25 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {environment} from'src/environments/environment';
-
-interface Usuario{
-  email:string,
-  password:string
-}
+import { playerLogin, playerRegister} from '../interfaces/player';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  urlApiBase: string= environment.urlTestLogin;
+   url: string= environment.urlAPI;
 
   constructor(private http:HttpClient){
 
   }
 
-  postLogin(data: Usuario): Observable<any>{
+  postLogin(data: playerLogin): Observable<any>{
 
-      const url= this.urlApiBase + "api/Usuario";
+      const url= this.url + "players/login";
 
       const usuario= {
-        nombredeUsuario: data.email,
+        email: data.email,
         password:data.password
       }
 
@@ -36,6 +32,22 @@ export class AuthService {
 
   }
 
-  //return validateToken()
+  postRegister(data: playerRegister): Observable<any>{
+
+    const url= this.url + "players/register";
+
+    const usuario= {
+      name:data.username,
+      email: data.email,
+      password:data.password
+    }
+
+    const body= JSON.stringify(usuario);
+
+    const headers= {'content-type': 'application/json'}
+
+   return  this.http.post(url, body, {headers:headers});
+
+}
 
 }

@@ -1,0 +1,24 @@
+.container-fluid{
+    background-color: green; 
+    width: 100%; 
+    height: 100vh;
+}
+.table{
+    width: 50vw;
+    background-color: whitesmoke;
+    border-radius: 5px;
+}
+h1{
+    color: whitesmoke;
+}
+button{
+    margin-top: 5vw;
+    padding-bottom: 1vw;
+    padding-top: 1vw;
+    font-size: 40px;
+    margin-bottom: 5vw;
+}
+#continuarbtn{
+    margin-top: 0;
+    margin-bottom: 5vw;
+}

@@ -4,7 +4,7 @@ const {Player} = require ('../controllers/playersController');
 
 
 
- router.get('/', async function (req,res) 
+ router.get('/all', async function (req,res) 
  {
    await Player.GetAllPlayers(req,res);
 

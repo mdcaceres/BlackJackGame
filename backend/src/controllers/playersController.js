@@ -72,6 +72,14 @@ module.exports.Player = {
     return res.status(400).json({ errors: errors.array() }) 
     }*/
 
+    const emailExists= await pool.query('SELECT * FROM players where email = ?', email)
+    
+    if(emailExists.length != 0){ 
+        response.error=true;
+        response.data= { msg: "The account already exists" }
+        return res.status(400).json(response)
+    }  
+
     const newPassword = bcrypt.hashSync(
       password,
       Number.parseInt(authconfig.rounds)

@@ -45,12 +45,12 @@ export class GameService {
 
   //dieces, jotas, reinas y reyes tienen un valor de 10 cada una
   //ases pueden tener dos valores diferentes: uno u once
-calculatePoints(deck: card[], asValue: boolean):number{
+calculatePoints(deck: card[]):number{
   console.log(deck); 
   
     const deckCards :card[]=deck; 
     let points:number =0;
-    let asCard:number= asValue? 11:1;
+    let asCard:number= 0;
     
    for (const card of deckCards) {
 
@@ -58,6 +58,10 @@ calculatePoints(deck: card[], asValue: boolean):number{
         points += 10
        }
        else if(card.value == 'A'){
+        if(points+11>21){
+          asCard = 1; 
+        } else
+         asCard = 11;
         points += asCard
        }
        else{

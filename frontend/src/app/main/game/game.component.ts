@@ -13,6 +13,7 @@ import { GameService } from 'src/app/services/game.service';
 import { CroupierComponent } from '../croupier/croupier.component';
 import { PlayerComponent } from '../player/player.component';
 import Swal from 'sweetalert2';
+import { DetailService } from 'src/app/services/detail.service';
 
 @Component({
   selector: 'app-game',
@@ -20,6 +21,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./game.component.css'],
 })
 export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
+  private id : number = 0; // asignar con el loby o por la ruta 
   private deck: card[] = [];
   private sub: Subscription = new Subscription();
   private cardPlayer: card = {} as card;
@@ -30,7 +32,9 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(PlayerComponent) childPlayer!: PlayerComponent;
   @ViewChild(CroupierComponent) childCroupier!: CroupierComponent;
 
-  constructor(private gameService: GameService) {}
+ 
+  constructor(
+    private gameService: GameService) {}
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
@@ -117,7 +121,7 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
     if(result){
       this.cardPlayer = result;
     }
-    this.childPlayer.askForCard(this.cardPlayer);  
+    this.childPlayer.askForCard(this.id,this.cardPlayer);  
   }
 
   sendCroupier():void{

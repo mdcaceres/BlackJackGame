@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ResultPlayer } from 'src/app/interfaces/result'; 
@@ -23,6 +23,11 @@ export class LoginComponent implements OnInit {
              { }
 
   ngOnInit(): void {
+  }
+
+  validarCampo(input:string){
+    return this.formLogin.controls[input].errors 
+          && this.formLogin.controls[input].touched
   }
 
   login(){

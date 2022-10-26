@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import {ResultPlayer} from 'src/app/interfaces/result';
@@ -26,6 +26,12 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
   }
   
+
+  validarCampo(input:string){
+    return this.formRegister.controls[input].errors 
+          && this.formRegister.controls[input].touched
+  }
+
   register(){
     const {password, confirmPassword}=this.formRegister.value;
     //TODO: Realizar validacion check password form reactivo.

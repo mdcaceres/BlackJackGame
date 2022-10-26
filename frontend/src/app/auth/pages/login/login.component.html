@@ -4,16 +4,18 @@
         <div class="col md-6">
                <label for="email" class="form-label"  >Email</label>
                <input type="email" class="form-control"  formControlName="email" name="email" >
+               <span class="text-danger" *ngIf="validarCampo('email')">El email debe ser valido</span>
         </div>
         <div class="col-md-6">
             <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control" formControlName="password" name="password">
+            <span class="text-danger"  *ngIf="validarCampo('password')">Minimo de 6 caracteres</span>
         </div>
         <div class="col-md-12 py-3">
             <a routerLink="/auth/register">Or create account</a>
         </div>
         <div class="col-md-12 py-3">
-            <button type="submit" class="btn btn-secondary">Login</button>
+            <button type="submit" class="btn btn-secondary" [disabled]="formLogin.invalid">Login</button>
         </div>
     </form>
 </div>

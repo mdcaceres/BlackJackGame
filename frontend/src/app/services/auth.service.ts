@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {environment} from'src/environments/environment';
 import { playerLogin, playerRegister} from '../interfaces/player';
+import { ResultPlayer } from '../interfaces/result';
 
 @Injectable({
   providedIn: 'root'
@@ -49,5 +50,27 @@ export class AuthService {
    return  this.http.post(url, body, {headers:headers});
 
 }
+ 
+ validateToken():Observable<boolean>{
+
+  const token= JSON.parse(localStorage.getItem('playerToken')!);
+
+  if(token){
+    return new Observable((suscriber)=>{
+        console.log('token true')
+        suscriber.next(true);
+    })}
+  else{
+    return new Observable((suscriber)=>{
+      console.log('token false')
+      suscriber.next(false);
+  })}
+ }
+
+ logout(){
+   console.log('logout')
+   localStorage.removeItem('playerToken');
+  
+ }
 
 }

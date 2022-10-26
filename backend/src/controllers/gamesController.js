@@ -22,14 +22,7 @@ module.exports.Game = {
         response.error=true;
         response.data= { msg: "Player not valid" }
         return res.status(400).json(response)
-    }                                          
-    const inProgress= await pool.query('SELECT * FROM games where idPlayer= ?', idPlayer)
-   //TODO: Definir negocio.. 
-    if(inProgress.length !=0){ 
-      response.error=true;
-      response.data= { msg: "Game in progress" }
-      return res.status(400).json(response)
-  }
+    }  
 
     await pool.query('INSERT INTO games SET ?', newGame)
         .then(result=>{

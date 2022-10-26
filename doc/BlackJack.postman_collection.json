@@ -15,7 +15,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:7466/api/players",
+							"raw": "http://localhost:7466/api/players/all",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -23,7 +23,8 @@
 							"port": "7466",
 							"path": [
 								"api",
-								"players"
+								"players",
+								"all"
 							]
 						}
 					},

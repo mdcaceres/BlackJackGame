@@ -17,10 +17,10 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let game of games" [ngClass]="{'table-warning': game.result === 1,'table-success': game.result === 2,'table-danger': game.result === 3, 'table-secondary': game.result === 4 }">
+              <tr *ngFor="let game of games" [ngClass]="{'table-warning': game.idResultType=== 1,'table-success': game.idResultType === 2,'table-danger': game.idResultType === 3, 'table-secondary': game.idResultType === 4 }">
                 <th scope="row">{{game.id}}</th>
-                <td>{{game.player}}</td>
-                <td>{{game.result}}</td>
+                <td>{{game.idPlayer}}</td>
+                <td>{{game.idResultType}}</td>
               </tr>
             </tbody>
           </table>

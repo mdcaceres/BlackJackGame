@@ -67,8 +67,9 @@ calculatePoints(deck: card[], asValue: boolean):number{
    }
    return points;
   }
-  getGames():Observable<Game []>{
-    const url= '';
+  getGames():Observable<Game[]>{
+    //const url= environment.urlAPI + 'games';
+    const url='http://localhost:7466/api/games';
     const headers={'content-type':'json/application'}
     return this.http.get<Game[]>(url, {headers:headers})
 

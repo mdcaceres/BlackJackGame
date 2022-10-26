@@ -12,15 +12,19 @@ import { GameService } from 'src/app/services/game.service';
 export class LobbyComponent implements OnInit, OnDestroy {
   private sub: Subscription = new Subscription();
 
-  games: Game[] = [{id:1,player:'juan',result:1},{id:1,player:'juan',result:3},{id:1,player:'juan',result:2},{id:1,player:'juan',result:4}];
+  games: Game[] = [{id:30,player:'juan',result:1},{id:1,player:'juan',result:3},{id:1,player:'juan',result:2},{id:1,player:'juan',result:4}];
    even = (game: Game) => game.result == 1;
 
   PendingGame!: boolean
+  pendingId?: number
   constructor(private router: Router, private gameService:GameService) { }
 
   ngOnInit(): void {
     this.loadGames();
     this.PendingGame=this.games.some(this.even);
+    if(this.PendingGame){
+       this.pendingId = (this.games.find(game => game.result  = 1))?.id;
+    }
   }
   ngOnDestroy(): void {
     this.sub.unsubscribe();
@@ -28,6 +32,9 @@ export class LobbyComponent implements OnInit, OnDestroy {
   
   NewGame(){
     this.router.navigateByUrl('/game');
+  }
+  ContinueGame(){
+    this.router.navigateByUrl('/game/' + this.pendingId );
   }
   loadGames(): void {
     this.sub.add(

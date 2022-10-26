@@ -131,7 +131,7 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
       if(result){
         this.cardCroupier = result;
       }
-      this.childCroupier.askForCard(this.cardCroupier);
+      this.childCroupier.askForCard(this.id,this.cardCroupier);
     }
   }
 

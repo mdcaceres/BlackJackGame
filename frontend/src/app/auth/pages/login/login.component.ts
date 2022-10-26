@@ -25,12 +25,25 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  validarform(){
+    if(this.formLogin.invalid){
+       this.formLogin.markAllAsTouched()
+       return false;
+    }
+    return true;
+  }
+
   validarCampo(input:string){
     return this.formLogin.controls[input].errors 
           && this.formLogin.controls[input].touched
   }
 
   login(){
+
+    if(!this.validarform()){
+      return;
+    }
+    
     this.authAPI.postLogin(this.formLogin.value).subscribe({ 
                   next:(response:ResultPlayer)=>{
                     localStorage.setItem('playerToken', JSON.stringify(response.data?.token));

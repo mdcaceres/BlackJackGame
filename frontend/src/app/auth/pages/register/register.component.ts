@@ -25,7 +25,14 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  
+
+  validarform(){
+    if(this.formRegister.invalid){
+       this.formRegister.markAllAsTouched()
+       return false;
+    }
+    return true;
+  }
 
   validarCampo(input:string){
     return this.formRegister.controls[input].errors 
@@ -33,6 +40,11 @@ export class RegisterComponent implements OnInit {
   }
 
   register(){
+
+     if(!this.validarform()){
+        return;
+     }
+
     const {password, confirmPassword}=this.formRegister.value;
     //TODO: Realizar validacion check password form reactivo.
     if(password=== confirmPassword){

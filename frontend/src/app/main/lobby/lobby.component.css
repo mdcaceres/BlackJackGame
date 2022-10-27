@@ -12,7 +12,7 @@ h1{
     color: whitesmoke;
 }
 button{
-    margin-top: 5vw;
+    margin-top: 2vw;
     padding-bottom: 1vw;
     padding-top: 1vw;
     font-size: 40px;
@@ -21,4 +21,10 @@ button{
 #continuarbtn{
     margin-top: 0;
     margin-bottom: 5vw;
+}
+#logout{
+    font-size: 15px;
+    margin-left: 17.5vw;
+    margin-top: 0;
+    align-self: flex-end;
 }

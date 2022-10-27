@@ -1,19 +1,20 @@
 
 <div class="container-fluid ">
-    <div class="row">
-       <div class="d-flex align-items-end flex-column">
-        <button class="btn btn-dark btn-sm" type="button" (click)="logout()">Logout</button>
-      </div>
-    </div>
    <div class="row">
+        <div class="col">
+          
+        </div>
         <div class="d-grid gap-2 col-6 mx-auto">
             <button class="btn btn-success" type="button" (click)="NewGame()">Nuevo Juego</button>
             <button class="btn btn-info" type="button" id="continuarbtn" *ngIf="PendingGame" (click)="ContinueGame()">Continuar Partida</button>
             <h1>Historial de Partidas</h1>
           </div>
+        <div class="col">
+          <button class="btn btn-light btn-sm" type="button" id="logout" (click)="logout()">Cerrar Sesión</button>
+        </div>
     </div>
     <div class="row">
-        
+
         <table class="table col-6 mx-auto" *ngIf="games">
             <thead>
               <tr>
@@ -30,5 +31,6 @@
               </tr>
             </tbody>
           </table>
+          
     </div>
 </div>

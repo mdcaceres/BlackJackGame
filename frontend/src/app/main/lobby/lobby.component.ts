@@ -13,18 +13,18 @@ export class LobbyComponent implements OnInit, OnDestroy {
   private sub: Subscription = new Subscription();
 
   games?: Game[];
-   even = (game: Game) => game.idResultType == 1;
-
+  even = (game: Game) => game.result === "pending";
+  id!: number;
   PendingGame?: boolean
   pendingId?: number
   constructor(private router: Router, private gameService:GameService) { }
 
   ngOnInit(): void {
+    this.id= parseInt(localStorage.getItem('id')!);
     this.loadGames();
-    console.log(this.games);
     this.PendingGame=this.games?.some(this.even);
     if(this.PendingGame){
-       this.pendingId = (this.games?.find(game => game.idResultType == 1))?.id;
+       this.pendingId = (this.games?.find(game => game.result === 'pending'))?.gameID;
     }
   }
   ngOnDestroy(): void {
@@ -40,8 +40,13 @@ export class LobbyComponent implements OnInit, OnDestroy {
   loadGames(): void {
     this.sub.add(
       this.gameService.getGames().subscribe({
-        next: (games: Game[]) => {
-          this.games=games;
+        next: (response) => {
+          console.log(response)
+          let id = this.id;
+          this.games = response.data.filter((x:Game) => {
+            return x.idPlayer === id;
+          });
+          console.log(this.games)
         },
         error: () => {
           alert('error al cargar el historial');

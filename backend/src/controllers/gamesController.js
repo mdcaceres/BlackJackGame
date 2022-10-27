@@ -48,7 +48,7 @@ module.exports.Game = {
       data: null,
     };
 
-      await pool.query('SELECT * FROM games')
+      await pool.query('SELECT g.id as gameID, p.id as idPlayer,p.name as playerName, d.id as detailID, r.description as result, s.description as suite, c.value , d.isCroupier FROM games g JOIN gamesDetails d on g.id=d.idGame JOIN resultTypes r on r.id=g.idResultType JOIN cards c on c.id= d.idCard JOIN suiteTypes s on s.id= c.idSuiteType JOIN players p on p.id= g.idPlayer')
            .then(games =>{
             response.data= games
             res.status(200).json(response);

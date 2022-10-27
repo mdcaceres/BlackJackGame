@@ -22,6 +22,7 @@ export class CroupierComponent implements OnInit {
       return;
     }
     this.croupier.gameCards.push(card)
+    
     this.detailService.create({
       idCard:card.id,
       idGame:gameId,

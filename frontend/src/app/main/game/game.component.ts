@@ -9,11 +9,13 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { card } from 'src/app/interfaces/card';
+import { Game } from 'src/app/interfaces/game';
 import { GameService } from 'src/app/services/game.service';
 import { CroupierComponent } from '../croupier/croupier.component';
 import { PlayerComponent } from '../player/player.component';
 import Swal from 'sweetalert2';
 import { DetailService } from 'src/app/services/detail.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-game',
@@ -31,10 +33,13 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
   private counter: number = 0;
   @ViewChild(PlayerComponent) childPlayer!: PlayerComponent;
   @ViewChild(CroupierComponent) childCroupier!: CroupierComponent;
+  
 
  
   constructor(
-    private gameService: GameService) {}
+    private gameService: GameService,
+    private detailService : DetailService,
+    private root:ActivatedRoute) {}
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
@@ -42,10 +47,19 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
   
   ngOnInit(): void {
     this.loadDeck();
-    this.start();
+    this.root.params.subscribe({
+      next: params => {
+        let id = params["id"];
+        if(id){
+          this.id = id;
+        } 
+      }
+    });
+    this.start(this.id);
   }
   ngAfterViewInit() {}
 
+  
   loadDeck(): void {
     this.sub.add(
       this.gameService.getDeck().subscribe({
@@ -54,7 +68,7 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
           console.log(cards);
           console.log(cards.data);
           for (const card of cards.data) {
-            card.path = 'src/assets/Cards/' + card.suite + '-' + card.value + '.png';
+            card.path = './assets/Cards/' + card.suite + '-' + card.value + '.png';
           }
           this.deck = this.shuffleArray(cards.data);
         },
@@ -65,20 +79,49 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
 
-  start(){
-    Swal.fire({
-      title: 'Comenzar un nuevo juego',
-      text: "",
-      icon: 'info',
-      showCancelButton: false,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, Juguemos'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.firstHand();
-      }
-    }).then(()=>{this.updatePlayersPoints()})
+  start(id?: number){
+
+    if(id !== 0){      
+      //cargar partida en curso
+      this.detailService.getGameDetail(this.id).subscribe({
+        next: resp => {
+          for (const detail of resp.data.gameDetails) {
+            if(detail.isCroupier){
+              //cargar carta a croupier
+              this.sendCroupierCardById(detail.idCard);
+            }else{
+              //cargar carta a jugador
+              this.sendPlayerCardById(detail.idCard);
+            }
+          }
+        }
+      });
+    }
+    else{
+     //nueva partida
+      let game = {
+        idResultType: 1,
+        idPlayer: id
+      } as Game;
+      this.gameService.createGame(game).subscribe({
+        next: resp => {
+          this.id = resp.data.idGame;
+        }
+      });
+      Swal.fire({
+        title: 'Empezar',
+        text: "",
+        icon: 'info',
+        showCancelButton: false,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, Juguemos'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.firstHand();
+        }
+      }).then(()=>{this.updatePlayersPoints()})
+    }
   }
 
   checkPointsOverflow(){
@@ -114,7 +157,6 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
   updatePlayersPoints():void{
     this.playerPoints = this.gameService.calculatePoints(this.childPlayer.getPlayerCards());
     this.croupierPoints = this.gameService.calculatePoints(this.childCroupier.getCroupierCards());
-    //setTimeout((e: any) => {this.checkPointsOverflow()}, 1500);
   }
 
   sendPlayer(){
@@ -125,6 +167,14 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
       this.cardPlayer = result;
     }
     this.childPlayer.askForCard(this.id,this.cardPlayer);  
+  }
+
+  sendPlayerCardById(cardId: number){
+    this.childPlayer.askForCard(this.id,this.deck.filter(x => x.id = cardId)[0]); 
+  }
+
+  sendCroupierCardById(cardId: number){
+    this.childCroupier.askForCard(this.id,this.deck.filter(x => x.id = cardId)[0]); 
   }
 
   sendCroupier():void{

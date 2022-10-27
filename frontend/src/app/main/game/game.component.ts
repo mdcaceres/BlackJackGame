@@ -45,16 +45,15 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.loadDeck();
     this.root.params.subscribe({
       next: (params) => {
         let id = params['id'];
         if (id) {
           this.id = id;
         }
-      },
+      }
     });
-    this.start(this.id);
+    this.loadDeck();   
   }
   ngAfterViewInit() {}
 
@@ -67,6 +66,7 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
               './assets/Cards/' + card.suite + '-' + card.value + '.png';
           }
           this.deck = this.shuffleArray(cards.data);
+          this.start(this.id);          
         },
         error: () => {
           alert('error al cargar cartas');

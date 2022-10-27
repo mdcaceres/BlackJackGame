@@ -45,12 +45,13 @@ export class LoginComponent implements OnInit {
     }
     
     this.authAPI.postLogin(this.formLogin.value).subscribe({ 
-                  next:(response:ResultPlayer)=>{
+                  next:(response)=>{
                     localStorage.setItem('playerToken', JSON.stringify(response.data?.token));
+                    localStorage.setItem('id', JSON.stringify(response.data?.id));
                     this.router.navigateByUrl('/main')
 
                   },
-                  error:(response:ResultPlayer)=>{
+                  error:(response)=>{
                     Swal.fire({
                       title:"Error *",
                       icon:"error",

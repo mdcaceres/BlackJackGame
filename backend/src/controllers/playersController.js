@@ -143,7 +143,7 @@ module.exports.Player = {
               }
             );
 
-            response.data = { user: row.email, token: token };
+            response.data = { user: row.email, id: row.id, token: token };
 
             res.status(200).json(response);
           } else {

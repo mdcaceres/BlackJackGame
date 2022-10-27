@@ -18,6 +18,9 @@ import { CroupierComponent } from './croupier/croupier.component';
   imports: [
     CommonModule,
     MainRoutingModule
+  ],
+  exports:[
+    LobbyComponent
   ]
 })
 export class MainModule { }

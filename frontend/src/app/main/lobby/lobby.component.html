@@ -1,1 +1,28 @@
-<p>lobby works!</p>
+<div class="container-fluid ">
+    <div class="row">
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button class="btn btn-success" type="button" (click)="NewGame()">Nuevo Juego</button>
+            <button class="btn btn-info" type="button" id="continuarbtn" *ngIf="PendingGame" (click)="ContinueGame()">Continuar Partida</button>
+            <h1>Historial de Partidas</h1>
+          </div>
+    </div>
+    <div class="row">
+        
+        <table class="table col-6 mx-auto" *ngIf="games">
+            <thead>
+              <tr>
+                <th scope="col">Partida</th>
+                <th scope="col">Jugador</th>
+                <th scope="col">Resultado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let game of games" [ngClass]="{'table-warning': game.result=== 'pending','table-success': game.result === 'win','table-danger': game.result === 'lose', 'table-secondary': game.result === 'draw' }">
+                <th scope="row">{{game.gameID}}</th>
+                <td>{{game.playerName}}</td>
+                <td>{{game.result}}</td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+</div>

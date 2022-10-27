@@ -1,21 +1,28 @@
 <div class="container text-light py-3">
-    <h1>Login</h1>
-    <form [formGroup]="formLogin" (ngSubmit)="login()" class="row py-3">
-        <div class="col md-6">
-               <label for="email" class="form-label"  >Email</label>
-               <input type="email" class="form-control"  formControlName="email" name="email" >
-               <span class="text-danger" *ngIf="validarCampo('email')">El email debe ser valido</span>
-        </div>
-        <div class="col-md-6">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" formControlName="password" name="password">
-            <span class="text-danger"  *ngIf="validarCampo('password')">Minimo de 6 caracteres</span>
-        </div>
-        <div class="col-md-12 py-3">
-            <a routerLink="/auth/register">O Crea una cuenta</a>
-        </div>
-        <div class="col-md-12 py-3">
-            <button type="submit" class="btn btn-secondary">Ingresar</button>
-        </div>
-    </form>
+    <div id="logo">
+        <img src="https://media.forgecdn.net/avatars/70/988/636163241401317921.png" alt="">
+        <h1>Blackjack - versión minecraft</h1> 
+        
+    </div>
+    <div class="mt-5">
+        <h3>Ingresar</h3>    
+        <form [formGroup]="formLogin" (ngSubmit)="login()" class="row py-3">
+            <div class="col md-6">
+                   <label for="email" class="form-label"  >Email</label>
+                   <input type="email" class="form-control"  formControlName="email" name="email" >
+                   <span class="text-danger" *ngIf="validarCampo('email')">El email debe ser valido</span>
+            </div>
+            <div class="col-md-6">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" formControlName="password" name="password">
+                <span class="text-danger"  *ngIf="validarCampo('password')">Minimo de 6 caracteres</span>
+            </div>
+            <div class="col-md-12 py-3">
+                <a routerLink="/auth/register">Crea una cuenta</a>
+            </div>
+            <div class="col-md-12 py-3">
+                <button type="submit" class="btn btn-secondary">Ingresar</button>
+            </div>
+        </form>
+    </div>     
 </div>

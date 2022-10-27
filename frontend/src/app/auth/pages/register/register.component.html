@@ -1,31 +1,37 @@
 <div class="container text-light py-3">
-    <h1>Register</h1>
-    <form [formGroup]="formRegister" (ngSubmit)="register()" class="row py-5">
-        <div class="col-md-6">
-            <label for="username" class="form-label" >Username</label>
-            <input type="text" class="form-control" formControlName="username">
-            <span class="text-danger" *ngIf="validarCampo('username')">Minimo 4 caracteres</span>
-        </div>
-        <div class="col md-6">
-               <label for="email" class="form-label" >Email</label>
-               <input type="email" class="form-control" formControlName="email" >
-               <span class="text-danger" *ngIf="validarCampo('email')">El email debe ser valido</span>
-        </div>
-        <div class="col-md-6">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" formControlName="password" >
-            <span class="text-danger"  *ngIf="validarCampo('password')">Minimo de 6 caracteres</span>
-        </div>
-        <div class="col-md-6">
-            <label for="confirmPassword" class="form-label">Confirm Password</label>
-            <input type="password" class="form-control" formControlName="confirmPassword">
-            <span class="text-danger"  *ngIf="validarCampo('confirmPassword')">Minimo de 6 caracteres</span>
-        </div>
-        <div class="col-md-12 py-3">
-            <a routerLink="auth/login">Or login account</a>
-        </div>
-        <div class="col-md-12 py-3">
-            <button type="submit" class="btn btn-secondary" >Register</button>
-        </div>
-    </form>
+    <div id="logo">
+        <img src="https://media.forgecdn.net/avatars/70/988/636163241401317921.png" alt="">
+        <h1>Blackjack - versión minecraft</h1>
+    </div>
+    <div class="mt-5">
+        <h3>Registrar</h3>
+        <form [formGroup]="formRegister" (ngSubmit)="register()" class="row py-3">
+            <div class="col-md-6">
+                <label for="username" class="form-label">Nombre de Usuario</label>
+                <input type="text" class="form-control" formControlName="username">
+                <span class="text-danger" *ngIf="validarCampo('username')">Minimo 4 caracteres</span>
+            </div>
+            <div class="col md-6">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" formControlName="email">
+                <span class="text-danger" *ngIf="validarCampo('email')">El email debe ser valido</span>
+            </div>
+            <div class="col-md-6">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" formControlName="password">
+                <span class="text-danger" *ngIf="validarCampo('password')">Minimo de 6 caracteres</span>
+            </div>
+            <div class="col-md-6">
+                <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
+                <input type="password" class="form-control" formControlName="confirmPassword">
+                <span class="text-danger" *ngIf="validarCampo('confirmPassword')">Minimo de 6 caracteres</span>
+            </div>
+            <div class="col-md-12 py-3">
+                <a routerLink="auth/login">Iniciar sesión</a>
+            </div>
+            <div class="col-md-12 py-3">
+                <button type="submit" class="btn btn-secondary">Registrar</button>
+            </div>
+        </form>
+    </div>
 </div>

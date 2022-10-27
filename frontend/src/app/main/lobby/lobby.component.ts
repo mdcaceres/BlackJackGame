@@ -22,10 +22,6 @@ export class LobbyComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.id= parseInt(localStorage.getItem('id')!);
     this.loadGames();
-    this.PendingGame=this.games?.some(this.even);
-    if(this.PendingGame){
-       this.pendingId = (this.games?.find(game => game.result === 'pending'))?.gameID;
-    }
   }
   ngOnDestroy(): void {
     this.sub.unsubscribe();
@@ -50,6 +46,12 @@ export class LobbyComponent implements OnInit, OnDestroy {
         },
         error: () => {
           alert('error al cargar el historial');
+        },
+        complete:()=>{
+          this.PendingGame=this.games?.some(this.even);
+          if(this.PendingGame){
+            this.pendingId = (this.games?.find(game => game.result === 'pending'))?.gameID;
+         }
         }
       })
     );

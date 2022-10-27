@@ -1,10 +1,11 @@
 export interface Game{
-    gameID: number;
+    gameID?: number;
     idPlayer: number;
-    playerName: string;
-    detailID: number;
-    result: string;
-    suite: string;
-    value: string;
+    playerName?: string;
+    detailID?: number;
+    result?: string;
+    suite?: string;
+    value?: string;
     isCroupier: number;
+    idResultType?:number;
 }

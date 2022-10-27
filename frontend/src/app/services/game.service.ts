@@ -80,7 +80,7 @@ calculatePoints(deck: card[]):number{
   }
 
   createGame(game:Game):Observable<any>{
-    return this.http.post<any>(`${this.apiUrl}/games`,game); 
+    return this.http.post<any>(`${this.apiUrl}games`,game); 
   }
 
 

@@ -31,6 +31,10 @@ export class PlayerComponent implements OnInit {
     } as detail)
   }
 
+  saveCard(card: card){
+    this.player.gameCards.push(card);
+  }
+
   stopPlaying() {
     return {
       playerCards: this.player.gameCards

@@ -33,6 +33,11 @@ export class CroupierComponent implements OnInit {
       }
     });
   }
+
+  saveCard(card: card){
+    this.croupier.gameCards.push(card)
+  }
+
   getCroupierCards() {
     return this.croupier.gameCards;
   }

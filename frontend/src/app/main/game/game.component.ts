@@ -23,7 +23,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./game.component.css'],
 })
 export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
-  private id : number = 0; // asignar con el loby o por la ruta 
+  private id: number = 0; // asignar con el loby o por la ruta
   private deck: card[] = [];
   private sub: Subscription = new Subscription();
   private cardPlayer: card = {} as card;
@@ -33,205 +33,205 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
   private counter: number = 0;
   @ViewChild(PlayerComponent) childPlayer!: PlayerComponent;
   @ViewChild(CroupierComponent) childCroupier!: CroupierComponent;
-  
 
- 
   constructor(
     private gameService: GameService,
-    private detailService : DetailService,
-    private root:ActivatedRoute) {}
+    private detailService: DetailService,
+    private root: ActivatedRoute
+  ) {}
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
-  
+
   ngOnInit(): void {
     this.loadDeck();
     this.root.params.subscribe({
-      next: params => {
-        let id = params["id"];
-        if(id){
+      next: (params) => {
+        let id = params['id'];
+        if (id) {
           this.id = id;
-          console.log("parametro id", id);
-        } 
-      }
+        }
+      },
     });
     this.start(this.id);
   }
   ngAfterViewInit() {}
 
-  
   loadDeck(): void {
     this.sub.add(
       this.gameService.getDeck().subscribe({
         next: (cards) => {
-          console.log("dentro del subscribe");
-          console.log(cards);
-          console.log(cards.data);
           for (const card of cards.data) {
-            card.path = './assets/Cards/' + card.suite + '-' + card.value + '.png';
+            card.path =
+              './assets/Cards/' + card.suite + '-' + card.value + '.png';
           }
           this.deck = this.shuffleArray(cards.data);
         },
         error: () => {
           alert('error al cargar cartas');
-        }
+        },
       })
     );
   }
 
-  start(id?: number){
-
-    if(id !== 0){      
+  start(id?: number) {
+    if (id !== 0) {
       //cargar partida en curso
       this.detailService.getGameDetail(this.id).subscribe({
-        next: resp => {
+        next: (resp) => {
           for (const detail of resp.data.gameDetails) {
-            if(detail.isCroupier){
+            if (detail.isCroupier) {
               //cargar carta a croupier
               this.sendCroupierCardById(detail.idCard);
-            }else{
+            } else {
               //cargar carta a jugador
               this.sendPlayerCardById(detail.idCard);
             }
           }
-        }
+          this.updatePlayersPoints();
+        },
       });
-    }
-    else{
-     //nueva partida
+    } else {
+      //nueva partida
       let idPlayer = parseInt(localStorage.getItem('id')!);
-      console.log("id player",idPlayer)
       let game = {
         idResultType: 1,
-        idPlayer: idPlayer
+        idPlayer: idPlayer,
       } as Game;
       this.gameService.createGame(game).subscribe({
-        next: resp => {
+        next: (resp) => {
           this.id = resp.data.idGame;
-        }
+        },
       });
       Swal.fire({
         title: 'Empezar',
-        text: "",
+        text: '',
         icon: 'info',
         showCancelButton: false,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Si, Juguemos'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.firstHand();
-        }
-      }).then(()=>{this.updatePlayersPoints()})
+        confirmButtonText: 'Si, Juguemos',
+      })
+        .then((result) => {
+          if (result.isConfirmed) {
+            this.firstHand();
+          }
+        })
+        .then(() => {
+          this.updatePlayersPoints();
+        });
     }
   }
 
-  checkPointsOverflow(){
-    if(this.playerPoints > 21){
-      setTimeout((e: any) => {this.resetWithMessage('Te pasaste de 21! Suerte la proxima',
-      'La Casa Gana',
-      'error' );}, 1500);
+  checkPointsOverflow() {
+    if (this.playerPoints > 21) {
+      setTimeout((e: any) => {
+        this.resetWithMessage(
+          'Te pasaste de 21! Suerte la proxima',
+          'La Casa Gana',
+          'error'
+        );
+      }, 1500);
     }
-    if(this.croupierPoints > 21){
-      setTimeout((e: any) => {this.resetWithMessage('Ganaste! La casa se paso de 21 🤴',
-      'Buen juego',
-      'success');}, 1500);
-      
+    if (this.croupierPoints > 21) {
+      setTimeout((e: any) => {
+        this.resetWithMessage(
+          'Ganaste! La casa se paso de 21 🤴',
+          'Buen juego',
+          'success'
+        );
+      }, 1500);
     }
   }
 
-  firstHand():void{
+  firstHand(): void {
     this.sendPlayer();
     this.sendPlayer();
     this.sendCroupier();
   }
 
-
-
   send(): void {
     this.sendPlayer();
     this.updatePlayersPoints();
-    if(this.playerPoints=21){
+    if ((this.playerPoints = 21)) {
       this.hold();
     }
   }
 
-  updatePlayersPoints():void{
-    this.playerPoints = this.gameService.calculatePoints(this.childPlayer.getPlayerCards());
-    this.croupierPoints = this.gameService.calculatePoints(this.childCroupier.getCroupierCards());
+  updatePlayersPoints(): void {
+    this.playerPoints = this.gameService.calculatePoints(
+      this.childPlayer.getPlayerCards()
+    );
+    this.croupierPoints = this.gameService.calculatePoints(
+      this.childCroupier.getCroupierCards()
+    );
   }
 
-  sendPlayer(){
+  sendPlayer() {
     this.counter++;
     let result = this.deck.pop();
 
-    if(result){
+    if (result) {
       this.cardPlayer = result;
     }
-    this.childPlayer.askForCard(this.id,this.cardPlayer);  
+    this.childPlayer.askForCard(this.id, this.cardPlayer);
   }
 
-  sendPlayerCardById(cardId: number){
-    this.childPlayer.askForCard(this.id,this.deck.filter(x => x.id = cardId)[0]); 
+  sendPlayerCardById(cardId: number) {
+    let specificCard = this.deck.find((x) => x.id === cardId)!;
+    this.childPlayer.saveCard(specificCard);
   }
 
-  sendCroupierCardById(cardId: number){
-    this.childCroupier.askForCard(this.id,this.deck.filter(x => x.id = cardId)[0]); 
+  sendCroupierCardById(cardId: number) {
+    let specificCard = this.deck.find((x) => x.id === cardId)!;
+    this.childCroupier.saveCard(specificCard);
   }
 
-  sendCroupier():void{
-    if(this.counter >= 2){
+  sendCroupier(): void {
+    if (this.counter >= 2) {
       let result = this.deck.pop();
 
-      if(result){
+      if (result) {
         this.cardCroupier = result;
       }
-      this.childCroupier.askForCard(this.id,this.cardCroupier);
+      this.childCroupier.askForCard(this.id, this.cardCroupier);
     }
   }
 
-  hold():void{
-    while(this.croupierPoints < 17){
+  hold(): void {
+    while (this.croupierPoints < 17) {
       this.sendCroupier();
-      this.croupierPoints = this.gameService.calculatePoints(this.childCroupier.getCroupierCards());
-      if(this.croupierPoints>21){
+      this.croupierPoints = this.gameService.calculatePoints(
+        this.childCroupier.getCroupierCards()
+      );
+      if (this.croupierPoints > 21) {
         this.checkPointsOverflow();
         return;
       }
     }
     this.updatePlayersPoints();
 
-    let win = this.gameService.verifyWinner(this.playerPoints,this.croupierPoints);
-    
+    let win = this.gameService.verifyWinner(
+      this.playerPoints,
+      this.croupierPoints
+    );
+
     setTimeout((e: any) => {
-      if(win == true){
-        Swal.fire(
-          'Ganaste! 🤴',
-          'Buen juego',
-          'success'
-        )
+      if (win == true) {
+        Swal.fire('Ganaste! 🤴', 'Buen juego', 'success');
+        this.reset();
+      } else if (win === null) {
+        Swal.fire('Intenta de nuevo', 'Empataste con el croupier', 'warning');
+        this.reset();
+      } else {
+        Swal.fire('Perdiste', 'La Casa Gana', 'error');
         this.reset();
       }
-      else if( win === null){
-        Swal.fire(
-          'Intenta de nuevo',
-          'Empataste con el croupier',
-          'warning'
-        )
-        this.reset();
-      }else{
-        Swal.fire(
-          'Perdiste',
-          'La Casa Gana',
-          'error'
-        )
-        this.reset();
-      }
-      }, 1700);
+    }, 1700);
   }
 
-  shuffleArray(array:card[]) {
+  shuffleArray(array: card[]) {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       const temp = array[i];
@@ -241,7 +241,7 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
     return array;
   }
 
-  reset():void{
+  reset(): void {
     //Swal.fire('Nuevo Juego ⚔️')
     this.playerPoints = 0;
     this.croupierPoints = 0;
@@ -252,8 +252,12 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
     this.updatePlayersPoints();
   }
 
-  resetWithMessage(message:string, content:string, messagetype:string |any):void{
-    Swal.fire(message,content,messagetype);
+  resetWithMessage(
+    message: string,
+    content: string,
+    messagetype: string | any
+  ): void {
+    Swal.fire(message, content, messagetype);
     this.playerPoints = 0;
     this.croupierPoints = 0;
     this.childCroupier.reset();
@@ -263,5 +267,4 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
     this.updatePlayersPoints();
     this.reset();
   }
-  
 }

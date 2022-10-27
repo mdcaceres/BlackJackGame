@@ -47,8 +47,6 @@ export class GameService {
   //dieces, jotas, reinas y reyes tienen un valor de 10 cada una
   //ases pueden tener dos valores diferentes: uno u once
 calculatePoints(deck: card[]):number{
-  console.log(deck); 
-  
     const deckCards :card[]=deck; 
     let points:number =0;
     let asCard:number= 0;

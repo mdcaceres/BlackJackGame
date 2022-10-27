@@ -100,9 +100,11 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     else{
      //nueva partida
+      let idPlayer = parseInt(localStorage.getItem('id')!);
+      console.log("id player",idPlayer)
       let game = {
         idResultType: 1,
-        idPlayer: parseInt(localStorage.getItem('id')!)
+        idPlayer: idPlayer
       } as Game;
       this.gameService.createGame(game).subscribe({
         next: resp => {

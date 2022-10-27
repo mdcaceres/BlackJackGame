@@ -27,7 +27,11 @@ export class CroupierComponent implements OnInit {
       idCard:card.id,
       idGame:gameId,
       isCrupier:true
-    } as detail)
+    } as detail).subscribe({
+      next: resp =>{
+        
+      }
+    });
   }
   getCroupierCards() {
     return this.croupier.gameCards;

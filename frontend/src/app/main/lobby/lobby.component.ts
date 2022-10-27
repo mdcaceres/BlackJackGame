@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { Game } from 'src/app/interfaces/game';
 import { AuthService } from 'src/app/services/auth.service';
 import { GameService } from 'src/app/services/game.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-lobby',
@@ -34,7 +35,36 @@ export class LobbyComponent implements OnInit, OnDestroy {
   }
   
   NewGame(){
-    this.router.navigateByUrl('main/game');
+    if(this.PendingGame){    
+       Swal.fire({
+         title: "Partida pendiente",
+         text: "Se dara perdida la partida en curso, desea continuar?",
+         icon: 'warning',
+         showCancelButton: true,
+         confirmButtonText: "Confirmar",
+         cancelButtonText: "Cancelar",
+          })
+          .then(resultado => { 
+          if (resultado.value) {
+                                            //Juego perdido id:
+           this.gameService.updateGameResult(this.pendingId!,3).subscribe({
+            next:(response)=>{
+              console.log('Se carga estado perdido', response)
+              this.router.navigateByUrl('main/game');
+            },
+            error:(err)=>{
+              console.log('Error al borrar el juego', err)
+            }})
+        } 
+        else {
+        console.log("*NO se cambia estado");
+      }
+     });
+    }
+    else{
+      this.router.navigateByUrl('main/game');
+    }
+
   }
   ContinueGame(){
     this.router.navigateByUrl('main/game/' + this.pendingId );

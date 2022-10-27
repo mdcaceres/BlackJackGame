@@ -52,6 +52,7 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
         let id = params["id"];
         if(id){
           this.id = id;
+          console.log("parametro id", id);
         } 
       }
     });
@@ -101,7 +102,7 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
      //nueva partida
       let game = {
         idResultType: 1,
-        idPlayer: id
+        idPlayer: parseInt(localStorage.getItem('id')!)
       } as Game;
       this.gameService.createGame(game).subscribe({
         next: resp => {

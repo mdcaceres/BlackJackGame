@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Game } from 'src/app/interfaces/game';
+import { AuthService } from 'src/app/services/auth.service';
 import { GameService } from 'src/app/services/game.service';
 
 @Component({
@@ -17,7 +18,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
   id!: number;
   PendingGame?: boolean
   pendingId?: number
-  constructor(private router: Router, private gameService:GameService) { }
+  constructor(private router: Router, private gameService:GameService,private authService:AuthService) { }
 
   ngOnInit(): void {
     this.id= parseInt(localStorage.getItem('id')!);
@@ -25,6 +26,11 @@ export class LobbyComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.sub.unsubscribe();
+  }
+
+  logout(){
+    this.authService.logout();
+    this.router.navigateByUrl('auth')
   }
   
   NewGame(){

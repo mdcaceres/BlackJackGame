@@ -70,6 +70,7 @@ export class AuthService {
  logout(){
    console.log('logout')
    localStorage.removeItem('playerToken');
+   localStorage.removeItem('id');
   
  }
 

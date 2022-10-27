@@ -14,12 +14,12 @@ export class DetailService {
   constructor(private http : HttpClient) { }
 
   create(detail:detail):Observable<detail>{
-    return this.http.post<detail>(`${this.apiUrl}/games/${detail.idGame}/details`,{
+    return this.http.post<detail>(`${this.apiUrl}games/${detail.idGame}/details`,{
     idCard:detail.idCard,
     isCroupier:detail.isCrupier
     }); 
   }
   getGameDetail(idGame: number): Observable<any>{
-    return this.http.get<any>(`${this.apiUrl}/games/${idGame}`);
+    return this.http.get<any>(`${this.apiUrl}games/${idGame}`);
   }
 }

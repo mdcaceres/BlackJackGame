@@ -109,8 +109,8 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   updatePlayersPoints():void{
-    this.playerPoints = this.gameService.calculatePoints(this.childPlayer.getPlayerCards(),true);
-    this.croupierPoints = this.gameService.calculatePoints(this.childCroupier.getCroupierCards(),true);
+    this.playerPoints = this.gameService.calculatePoints(this.childPlayer.getPlayerCards());
+    this.croupierPoints = this.gameService.calculatePoints(this.childCroupier.getCroupierCards());
     //setTimeout((e: any) => {this.checkPointsOverflow()}, 1500);
   }
 
@@ -138,7 +138,7 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
   hold():void{
     while(this.croupierPoints < 17){
       this.sendCroupier();
-      this.croupierPoints = this.gameService.calculatePoints(this.childCroupier.getCroupierCards(),true);
+      this.croupierPoints = this.gameService.calculatePoints(this.childCroupier.getCroupierCards());
       if(this.croupierPoints>21){
         this.checkPointsOverflow();
         return;

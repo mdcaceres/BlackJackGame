@@ -10,14 +10,14 @@ import { Game } from '../interfaces/game';
 })
 export class GameService {
  
-   apiUrl=environment.url;
+   apiUrl=environment.urlAPI;
 
   constructor(private http:HttpClient) { }
 
-  getDeck():Observable<card []>{
+  getDeck():Observable<any>{
     const url= this.apiUrl;
     const headers={'content-type':'json/application'}
-    return this.http.get<card[]>(url, {headers:headers})
+    return this.http.get(`${url}cards`, {headers:headers})
 
   }
 

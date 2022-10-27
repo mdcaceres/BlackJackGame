@@ -49,11 +49,14 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
   loadDeck(): void {
     this.sub.add(
       this.gameService.getDeck().subscribe({
-        next: (cards: card[]) => {
-          for (const card of cards) {
-            card.path = 'src/assets/Cards' + card.suite + '-' + card.value + '.png';
+        next: (cards) => {
+          console.log("dentro del subscribe");
+          console.log(cards);
+          console.log(cards.data);
+          for (const card of cards.data) {
+            card.path = 'src/assets/Cards/' + card.suite + '-' + card.value + '.png';
           }
-          this.deck = this.shuffleArray(cards);
+          this.deck = this.shuffleArray(cards.data);
         },
         error: () => {
           alert('error al cargar cartas');

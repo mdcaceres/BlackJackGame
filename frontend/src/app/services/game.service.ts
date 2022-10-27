@@ -81,11 +81,10 @@ calculatePoints(deck: card[]):number{
     return this.http.post<any>(`${this.apiUrl}games`,game); 
   }
 
-
+  updateGameResult(gameId: number, resultTypeId: number):Observable<any>{
+    let resultType = {
+      result: resultTypeId
+    }
+    return this.http.put<any>(`${this.apiUrl}games/${gameId}`, resultType); 
+  }
 }
-
-// {
-
-//   "idResultType":1,
-//   "idPlayer":2
-// }

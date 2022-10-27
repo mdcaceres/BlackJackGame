@@ -154,7 +154,7 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
   send(): void {
     this.sendPlayer();
     this.updatePlayersPoints();
-    if ((this.playerPoints = 21)) {
+    if ((this.playerPoints >= 21)) {
       this.hold();
     }
   }
@@ -179,6 +179,7 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   sendPlayerCardById(cardId: number) {
+    this.counter++;
     let specificCard = this.deck.find((x) => x.id === cardId)!;
     this.childPlayer.saveCard(specificCard);
   }
@@ -216,19 +217,29 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
       this.playerPoints,
       this.croupierPoints
     );
-
-    setTimeout((e: any) => {
-      if (win == true) {
-        Swal.fire('Ganaste! 🤴', 'Buen juego', 'success');
-        this.reset();
-      } else if (win === null) {
-        Swal.fire('Intenta de nuevo', 'Empataste con el croupier', 'warning');
-        this.reset();
-      } else {
-        Swal.fire('Perdiste', 'La Casa Gana', 'error');
-        this.reset();
+    let result = win === null ? 4 : win ?  2: 3;
+    console.log("resultado juego", result)
+    this.gameService.updateGameResult(this.id,result).subscribe({
+      next: resp =>{
+        console.log("resultado guardado exitosamente");
+      },
+      complete: () =>{
+        setTimeout((e: any) => {
+          if (win == true) {
+            Swal.fire('Ganaste! 🤴', 'Buen juego', 'success');
+            this.reset();
+          } else if (win === null) {
+            Swal.fire('Intenta de nuevo', 'Empataste con el croupier', 'warning');
+            this.reset();
+          } else {
+            Swal.fire('Perdiste', 'La Casa Gana', 'error');
+            this.reset();
+          }
+        }, 1700);
       }
-    }, 1700);
+    });
+
+    
   }
 
   shuffleArray(array: card[]) {
@@ -248,8 +259,8 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
     this.childCroupier.reset();
     this.childPlayer.reset();
     this.loadDeck();
-    this.firstHand();
-    this.updatePlayersPoints();
+    // this.firstHand();
+    // this.updatePlayersPoints();
   }
 
   resetWithMessage(

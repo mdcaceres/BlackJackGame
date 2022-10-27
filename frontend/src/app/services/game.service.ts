@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { card } from '../interfaces/card';
+import { Game } from '../interfaces/game';
 
 @Injectable({
   providedIn: 'root'
@@ -70,5 +71,11 @@ calculatePoints(deck: card[]):number{
    }
    return points;
   }
+  getGames():Observable<Game[]>{
+    //const url= environment.urlAPI + 'games';
+    const url='http://localhost:7466/api/games';
+    const headers={'content-type':'json/application'}
+    return this.http.get<Game[]>(url, {headers:headers})
 
+  }
 }

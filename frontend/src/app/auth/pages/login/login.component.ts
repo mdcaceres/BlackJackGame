@@ -26,21 +26,20 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    this.authAPI.postLogin(this.formLogin.value).subscribe((response:ResultPlayer)=>{
-                  if(!response.error){
-                    console.log(response)
-                    localStorage.setItem('playerToken: ', JSON.stringify(response.data?.token))
+    this.authAPI.postLogin(this.formLogin.value).subscribe({ 
+                  next:(response:ResultPlayer)=>{
+                    localStorage.setItem('playerToken', JSON.stringify(response.data?.token));
                     this.router.navigateByUrl('/main')
-                  }else{
+
+                  },
+                  error:(response:ResultPlayer)=>{
                     Swal.fire({
                       title:"Error *",
                       icon:"error",
-                      text: response.data?.msg || 'Error login'
-                    })
-                    console.log(response.data)
+                      text: response.data?.msg || 'Error login, check'
+                    });
+                    console.log('Err ',response.data)
                   }
-                 
-                })
-  }
+   })}
 
 }

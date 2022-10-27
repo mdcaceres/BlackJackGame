@@ -31,29 +31,25 @@ export class RegisterComponent implements OnInit {
     //TODO: Realizar validacion check password form reactivo.
     if(password=== confirmPassword){
         this.authApi.postRegister(this.formRegister.value)
-                    .subscribe((result:ResultPlayer)=>{
-                      if(!result.error){
-                        console.log(result.data)
+                    .subscribe({ 
+                      next:(response:ResultPlayer)=>{
+                        console.log(response.data)
                         this.router.navigateByUrl('/auth')
-                      }
-                      else{
+                      },
+                      error:(error:ResultPlayer)=>{
                         Swal.fire({
                           title:'Failed register',
                           icon:'error',
-                          text:result.data?.msg ||'Error'
-                          
-                        })
-                      }
-                    })
-    }
+                          text:error.data?.msg ||'Error'
+                        }),
+                        console.log(error);
+            }})}  
     else{
       Swal.fire({
         title:'Error password',
         icon:'error',
         text:"Passwords don't match"
-      })
+      })}
     }
-
-  }
 
 }

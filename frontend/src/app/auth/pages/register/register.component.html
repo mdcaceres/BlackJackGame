@@ -1,6 +1,6 @@
 <div class="container text-light py-3">
     <h1>Register</h1>
-    <form [formGroup]="formRegister" class="row py-5">
+    <form [formGroup]="formRegister" (ngSubmit)="register()" class="row py-5">
         <div class="col-md-6">
             <label for="username" class="form-label" >Username</label>
             <input type="text" class="form-control" formControlName="username">
@@ -21,7 +21,7 @@
             <a routerLink="auth/login">Or login account</a>
         </div>
         <div class="col-md-12 py-3">
-            <button type="button" class="btn btn-secondary" (click)="register()">Register</button>
+            <button type="submit" class="btn btn-secondary">Register</button>
         </div>
     </form>
 </div>

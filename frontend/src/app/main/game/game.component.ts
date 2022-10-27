@@ -15,7 +15,7 @@ import { CroupierComponent } from '../croupier/croupier.component';
 import { PlayerComponent } from '../player/player.component';
 import Swal from 'sweetalert2';
 import { DetailService } from 'src/app/services/detail.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-game',
@@ -37,7 +37,8 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private gameService: GameService,
     private detailService: DetailService,
-    private root: ActivatedRoute
+    private root: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnDestroy(): void {
@@ -90,6 +91,9 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           }
           this.updatePlayersPoints();
+          if ((this.playerPoints >= 21)) {
+            this.hold();
+          }
         },
       });
     } else {
@@ -125,23 +129,39 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   checkPointsOverflow() {
-    if (this.playerPoints > 21) {
-      setTimeout((e: any) => {
-        this.resetWithMessage(
-          'Te pasaste de 21! Suerte la proxima',
-          'La Casa Gana',
-          'error'
-        );
-      }, 1500);
+    if (this.playerPoints > 21 && this.playerPoints > this.croupierPoints) {
+      this.gameService.updateGameResult(this.id, 3).subscribe({
+        next: () =>{
+
+        },
+        complete: () =>{
+          setTimeout((e: any) => {
+            this.resetWithMessage(
+              'Te pasaste de 21! Suerte la proxima',
+              'La Casa Gana',
+              'error'
+            );
+          }, 1500);
+        }
+      });
+     
     }
-    if (this.croupierPoints > 21) {
-      setTimeout((e: any) => {
-        this.resetWithMessage(
-          'Ganaste! La casa se paso de 21 🤴',
-          'Buen juego',
-          'success'
-        );
-      }, 1500);
+    else{
+      this.gameService.updateGameResult(this.id, 2).subscribe({
+        next: () => {
+
+        },
+        complete: () => {
+          setTimeout((e: any) => {
+            this.resetWithMessage(
+              'Ganaste! La casa se paso de 21 🤴',
+              'Buen juego',
+              'success'
+            );
+          }, 1500);
+        }
+      });
+      
     }
   }
 
@@ -152,8 +172,12 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   send(): void {
-    this.sendPlayer();
     this.updatePlayersPoints();
+    if(this.playerPoints < 21){
+      this.sendPlayer();
+      this.updatePlayersPoints();
+    }
+
     if ((this.playerPoints >= 21)) {
       this.hold();
     }
@@ -201,6 +225,8 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   hold(): void {
+    this.updatePlayersPoints();
+
     while (this.croupierPoints < 17) {
       this.sendCroupier();
       this.croupierPoints = this.gameService.calculatePoints(
@@ -210,32 +236,34 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
         this.checkPointsOverflow();
         return;
       }
-    }
-    this.updatePlayersPoints();
+    }    
 
     let win = this.gameService.verifyWinner(
       this.playerPoints,
       this.croupierPoints
     );
     let result = win === null ? 4 : win ?  2: 3;
-    console.log("resultado juego", result)
+
     this.gameService.updateGameResult(this.id,result).subscribe({
       next: resp =>{
-        console.log("resultado guardado exitosamente");
       },
       complete: () =>{
         setTimeout((e: any) => {
           if (win == true) {
-            Swal.fire('Ganaste! 🤴', 'Buen juego', 'success');
-            this.reset();
+            Swal.fire('Ganaste! 🤴', 'Buen juego', 'success').then(()=> {
+              this.reset();
+            });            
           } else if (win === null) {
-            Swal.fire('Intenta de nuevo', 'Empataste con el croupier', 'warning');
-            this.reset();
+            Swal.fire('Intenta de nuevo', 'Empataste con el croupier', 'warning').then(()=> {
+              this.reset();
+            });            
           } else {
-            Swal.fire('Perdiste', 'La Casa Gana', 'error');
-            this.reset();
+            Swal.fire('Perdiste', 'La Casa Gana', 'error').then(()=> {
+              this.reset();
+            });            
           }
-        }, 1700);
+          
+        }, 1500);
       }
     });
 
@@ -253,12 +281,15 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   reset(): void {
+    this.router.navigateByUrl('/main');
     //Swal.fire('Nuevo Juego ⚔️')
-    this.playerPoints = 0;
-    this.croupierPoints = 0;
-    this.childCroupier.reset();
-    this.childPlayer.reset();
-    this.loadDeck();
+    // this.playerPoints = 0;
+    // this.croupierPoints = 0;
+    
+    // this.childCroupier.reset();
+    // this.childPlayer.reset();
+
+    // this.loadDeck();
     // this.firstHand();
     // this.updatePlayersPoints();
   }
@@ -268,14 +299,16 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
     content: string,
     messagetype: string | any
   ): void {
-    Swal.fire(message, content, messagetype);
-    this.playerPoints = 0;
-    this.croupierPoints = 0;
-    this.childCroupier.reset();
-    this.childPlayer.reset();
-    this.loadDeck();
-    this.firstHand();
-    this.updatePlayersPoints();
-    this.reset();
+    Swal.fire(message, content, messagetype).then(()=>{
+      this.reset();
+    });
+    // this.playerPoints = 0;
+    // this.croupierPoints = 0;
+    // this.childCroupier.reset();
+    // this.childPlayer.reset();
+    // this.loadDeck();
+    // this.firstHand();
+    // this.updatePlayersPoints();
+    
   }
 }

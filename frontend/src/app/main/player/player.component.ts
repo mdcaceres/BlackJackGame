@@ -28,7 +28,11 @@ export class PlayerComponent implements OnInit {
       idCard:card.id,
       idGame:gameId,
       isCrupier:false
-    } as detail)
+    } as detail).subscribe({
+      next: resp =>{
+        
+      }
+    });
   }
 
   saveCard(card: card){

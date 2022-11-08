@@ -1,0 +1,36 @@
+<div class="container-fluid">
+    <div class="d-flex justify-content-center">
+        <div class="col-3 ms-5"><h1>Reporte 1</h1> <br><p>Índice de victorias por parte del croupier.</p><br>
+                <div class="chart">
+                  <canvas baseChart width="400" height="600"
+                          [data]="pieChartData"
+                          [type]="pieChartType"
+                          [options]="pieChartOptions">
+                  </canvas>
+                </div>
+            </div>
+        <div class="col-3 ms-5"><h1>Reporte 2</h1><br> <p>Cantidad de juegos y jugadores por día.</p><br>
+            <div>
+                <div style="display: block;">
+                  <canvas baseChart width="400" height="200"
+                    [data]="barChartData"
+                    [options]="barChartOptions"
+                    [type]="barChartType" >
+                  </canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-3 ms-5"><h1>Reporte 3</h1><br><p>Promedio de jugadas con puntaje 21 divididas por croupier y jugadores.</p><br>
+            <div>
+                <div style="display: block">
+                    <canvas baseChart
+                      [data]="doughnutChartData"
+              
+                      [type]="doughnutChartType">
+                    </canvas>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
+

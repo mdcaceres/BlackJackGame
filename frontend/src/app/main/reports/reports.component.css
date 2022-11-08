@@ -1,0 +1,17 @@
+.container-fluid{
+    flex-direction: column;
+    background-color: green; 
+    width: 100%; 
+    min-height: 100vh;
+    padding-top: 3vh;
+}
+h1,p{
+    color: white;
+}
+canvas{
+    background-color: rgb(204, 238, 209);
+    border-radius: 20px;
+    border-color: rgb(3, 56, 3);
+    border-style: solid;
+    border-width: 2px;
+}

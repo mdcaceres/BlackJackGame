@@ -6,6 +6,8 @@ import { LobbyComponent } from './lobby/lobby.component';
 import { GameComponent } from './game/game.component';
 import { PlayerComponent } from './player/player.component';
 import { CroupierComponent } from './croupier/croupier.component';
+import { ReportsComponent } from './reports/reports.component';
+import { NgChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -13,11 +15,13 @@ import { CroupierComponent } from './croupier/croupier.component';
     LobbyComponent,
     GameComponent,
     PlayerComponent,
-    CroupierComponent
+    CroupierComponent,
+    ReportsComponent
   ],
   imports: [
     CommonModule,
-    MainRoutingModule
+    MainRoutingModule,
+    NgChartsModule
   ],
   exports:[
     LobbyComponent

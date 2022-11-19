@@ -17,6 +17,7 @@ app.use('/api/cards', require('./routes/cardsRoutes'));
 app.use('/api/games', require('./routes/gamesRoutes'));
 app.use('/api/', require('./routes/detailsGamesRoutes'));
 app.use('/api/players', require('./routes/playersRoutes'));
+app.use('/api/reports', require('./routes/reportRoutes'));
 
 app.listen(PORT, () => {
   console.log(`App listening on PORT ${PORT}`)

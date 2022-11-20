@@ -10,10 +10,12 @@ module.exports.Game = {
     };
 
     const{ idResultType, idPlayer}= req.body;
-      
+
+    let now= new Date();
     const newGame={  
         idResultType:idResultType, //1-pending 2-win 3-lost 4-draw
-        idPlayer: idPlayer,   // //validar si el player tiene partida en curso??
+        idPlayer: idPlayer,   
+        date: now
     }
 
     const playerExists= await pool.query('SELECT * FROM players where id= ?', idPlayer)
@@ -83,7 +85,7 @@ WHERE g.id = '1'
    */
 
   await pool.query("SELECT * FROM games g JOIN gamesDetails d ON g.id=d.idGame "+
-                   "WHERE g.id = ?", id) //Acá joineamos la consulta de acuerdo a lo que necesitemos.
+                   "WHERE g.id = ?", id) 
   .then(game =>{
 
     if (game.length === 0){

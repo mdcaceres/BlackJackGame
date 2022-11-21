@@ -15,14 +15,44 @@ export class ReportsComponent implements OnInit {
 
 
   constructor(private apiReportes: ReportService) { 
-
-     this.data1=this.apiReportes.getReporte1();
-     this.data2=this.apiReportes.getReporte2();
-     this.data3=this.apiReportes.getReporte3();
   }
 
   ngOnInit(): void {
-     
+     this.loadReports();
+            
+  }
+
+  loadReports(){
+
+    this.apiReportes.getReporte1()
+             .subscribe({
+              next:(resp)=>{
+                this.data1=resp
+              },
+              error:(err)=>{
+                console.log('Error report1: ', err)
+              }
+              });
+              
+    this.apiReportes.getReporte2() 
+              .subscribe({
+               next:(resp)=>{
+                  this.data2=resp
+                },
+                error:(err)=>{
+                  console.log('Error report2: ', err)
+                }
+                });
+
+    this.apiReportes.getReporte3()
+              .subscribe({
+                next:(resp)=>{
+                  this.data3=resp
+                },
+                error:(err)=>{
+                  console.log('Error report3: ', err)
+                }
+                })
   }
   
   public pieChartOptions: ChartConfiguration['options'] = {

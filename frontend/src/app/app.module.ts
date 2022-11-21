@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {HttpClientModule} from '@angular/common/http';
 import { MainModule } from './main/main.module';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -15,9 +16,10 @@ import { MainModule } from './main/main.module';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    MainModule
+    MainModule,
+    DatePipe
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

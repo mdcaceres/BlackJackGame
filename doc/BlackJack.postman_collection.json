@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "13799669-d91e-4a7d-bf3b-d62b84a5637c",
-		"name": "BlackJack",
+		"_postman_id": "5ff219c6-d708-4425-a1fc-626bdfca7263",
+		"name": "BlackJack Copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "20093382"
 	},
@@ -314,6 +314,74 @@
 								"games",
 								"3",
 								"details"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reports",
+			"item": [
+				{
+					"name": "reports1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7466/api/reports/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7466",
+							"path": [
+								"api",
+								"reports",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reports2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7466/api/reports/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7466",
+							"path": [
+								"api",
+								"reports",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reports3",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7466/api/reports/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7466",
+							"path": [
+								"api",
+								"reports",
+								"3"
 							]
 						}
 					},

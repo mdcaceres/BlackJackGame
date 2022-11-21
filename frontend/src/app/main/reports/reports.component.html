@@ -20,15 +20,24 @@
                 </div>
             </div>
         </div>
-        <div class="col-3 ms-5"><h1>Reporte 3</h1><br><p>Promedio de jugadas con puntaje 21 divididas por croupier y jugadores.</p><br>
+        <div class="col-3 ms-5"><h1>Reporte 3</h1><br><p>Indice de jugadas con puntaje 21 divididas por croupier y jugadores.</p><br>
             <div>
-                <div style="display: block">
-                    <canvas baseChart
-                      [data]="doughnutChartData"
-              
-                      [type]="doughnutChartType">
-                    </canvas>
-                  </div>
+              <h2 style="color: white;">Jugadores</h2>
+              <div style="display: block;">
+                <canvas baseChart width="400" height="200"
+                  [data]="barChartData"
+                  [options]="barChartOptions"
+                  [type]="barChartType" >
+                </canvas>
+              </div>
+              <h2 style="color: white;">Croupier</h2>
+              <div style="display: block;">
+                <canvas baseChart width="400" height="200"
+                  [data]="barChartData"
+                  [options]="barChartOptions"
+                  [type]="barChartType" >
+                </canvas>
+              </div>
             </div>
         </div>
     </div>

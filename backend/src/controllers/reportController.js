@@ -10,7 +10,7 @@ module.exports.Report = {
         };
       
       await pool.query("SELECT count(*) as victoriasCroupier,"+
-                       " (SELECT count(*) FROM games WHERE idResultType !=1) as totalJuegos "+ //Sacamos los empates para el indice
+                       "  (SELECT count(*) FROM games WHERE idResultType not in(1 ,4)) as totalJuegos "+ 
                       "FROM games AS g  group by g.idResultType having g.idResultType=3"
                       )
       .then( resp=>{
@@ -57,14 +57,15 @@ module.exports.Report = {
           };
         
     
-        await pool.query("SELECT COUNT(*) victoriasCroupier, "+
-                         " (SELECT COUNT(*)FROM games) totalJuegos "+
-                          "FROM games AS g WHERE g.idResultType=3")
+        await pool.query("select (select count(*) from games where idResultType=2 && isBlackJack=1 ) as BjPlayer, "+
+                         "(select count(*) from games where idResultType=2) as VictoriasPlayer, "+
+                         "(select count(*) from games where idResultType=3 && isBlackJack=1) as BjCroupier, "+
+                         "(select count(*) from games where idResultType=3) as VictoriasCroupier "+
+                         " from games g where idResultType=2 or idResultType=3 "+
+                         "group by BjPlayer, VictoriasPlayer, BjCroupier, VictoriasCroupier ")
        .then( resp=>{
-  
             response.data=resp;
             res.status(200).json(response);
-          
          })
          .catch(error=> {
           console.log(error);

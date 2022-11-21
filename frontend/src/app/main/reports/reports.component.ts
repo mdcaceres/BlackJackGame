@@ -37,14 +37,9 @@ export class ReportsComponent implements OnInit {
 
     this.apiReportes.getReporte2().subscribe({
       next: (resp) => {
-        // let arr = resp.data.map((x: any) => this.datePipe.transform(x.date,'dd/MM'));
-        // console.log("dias",arr)
         resp.data.forEach((data: Reporte2) => {
           this.data2.push({date: this.datePipe.transform(data.date,'dd/MM')!, cantidadJuegos: data.cantidadJuegos, cantidadJugadores: data.cantidadJugadores})
         });
-        console.log("Data 2", this.data2)
-        // let cantJuegos = this.data2.map((x: any) => x.cantidadJuegos)
-        // console.log("cant juegos", cantJuegos)
         this.loadReport2(this.data2);
       },
       error: (err) => {
@@ -104,7 +99,7 @@ export class ReportsComponent implements OnInit {
     labels: [['Casa Gana'], ['Jugador Gana']],
     datasets: [
       {
-        data: [], //Obtenemos de acá el primer reporte
+        data: [],
       },
     ],
   };

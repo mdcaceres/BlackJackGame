@@ -10,7 +10,7 @@ module.exports.Report = {
         };
       
       await pool.query("SELECT count(*) as victoriasCroupier,"+
-                       " (SELECT count(*) FROM games WHERE idResultType !=1) as totalJuegos"+ //Sacamos los empates para el indice
+                       " (SELECT count(*) FROM games WHERE idResultType !=1) as totalJuegos "+ //Sacamos los empates para el indice
                       "FROM games AS g  group by g.idResultType having g.idResultType=3"
                       )
       .then( resp=>{

@@ -47,7 +47,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
           .then(resultado => { 
           if (resultado.value) {
                                             //Juego perdido id:
-           this.gameService.updateGameResult(this.pendingId!,3).subscribe({
+           this.gameService.updateGameResult(this.pendingId!,3, null).subscribe({
             next:(response)=>{
               console.log('Se carga estado perdido', response)
               this.router.navigateByUrl('main/game');

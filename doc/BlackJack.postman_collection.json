@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "5ff219c6-d708-4425-a1fc-626bdfca7263",
+		"_postman_id": "8ee0dd56-21c6-4819-b888-9f3028fbcbbf",
 		"name": "BlackJack Copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "20093382"
@@ -239,7 +239,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"result\":1\r\n}",
+							"raw": "{\r\n    \"result\":2,\r\n    \"isBlackJack\":1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -247,7 +247,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:7466/api/games/3",
+							"raw": "http://localhost:7466/api/games/90",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -256,7 +256,7 @@
 							"path": [
 								"api",
 								"games",
-								"3"
+								"90"
 							]
 						}
 					},

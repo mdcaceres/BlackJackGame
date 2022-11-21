@@ -81,9 +81,13 @@ calculatePoints(deck: card[]):number{
     return this.http.post<any>(`${this.apiUrl}games`,game); 
   }
 
-  updateGameResult(gameId: number, resultTypeId: number, isBlackJack: any):Observable<any>{
-
-    //Acá deberíamos igualar a una variable dónde confirmamos si es 21
+  updateGameResult(gameId: number, resultTypeId: number, playerPoints: any,croupierPoints: any):Observable<any>{
+   
+    //Validamos si el update es con 21
+    let isBlackJack=0;
+    if(playerPoints==21 || croupierPoints== 21){
+        isBlackJack=1
+    }
     let resultType = {
       result: resultTypeId,
       isBlackJack: isBlackJack? isBlackJack:0

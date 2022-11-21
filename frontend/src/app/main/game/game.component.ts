@@ -130,7 +130,7 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
 
   checkPointsOverflow() {
     if (this.playerPoints > 21 && this.playerPoints > this.croupierPoints) {
-      this.gameService.updateGameResult(this.id, 3, null).subscribe({
+      this.gameService.updateGameResult(this.id, 3, this.playerPoints,this.croupierPoints).subscribe({
         next: () =>{
 
         },
@@ -147,7 +147,7 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
      
     }
     else{
-      this.gameService.updateGameResult(this.id, 2, null).subscribe({
+      this.gameService.updateGameResult(this.id, 2, this.playerPoints,this.croupierPoints).subscribe({
         next: () => {
 
         },
@@ -244,7 +244,7 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
     );
     let result = win === null ? 4 : win ?  2: 3;
 
-    this.gameService.updateGameResult(this.id,result, null).subscribe({
+    this.gameService.updateGameResult(this.id,result, this.playerPoints,this.croupierPoints).subscribe({
       next: resp =>{
       },
       complete: () =>{

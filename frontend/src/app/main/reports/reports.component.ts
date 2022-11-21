@@ -1,74 +1,107 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
+import { Reporte1 } from 'src/app/interfaces/report1';
+import { Reporte2 } from 'src/app/interfaces/report2';
 import { ReportService } from 'src/app/services/report.service';
 
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
-  styleUrls: ['./reports.component.css']
+  styleUrls: ['./reports.component.css'],
 })
 export class ReportsComponent implements OnInit {
- 
-  data1 :any[]=[]
-  data2 :any={};
-  data3 : any[]=[]
+  data1: Reporte1 = {} as Reporte1;
+  data2: Reporte2[] = [];
+  data3: any[] = [];
 
-
-  constructor(private apiReportes: ReportService) { 
-  }
+  constructor(private apiReportes: ReportService, private datePipe: DatePipe) {}
 
   ngOnInit(): void {
-     this.loadReports();
-            
+    this.loadReports();
+  }
+  ngAfterViewInit() {}
+
+  loadReports() {
+    this.apiReportes.getReporte1().subscribe({
+      next: (resp) => {
+        this.data1 = resp.data[0];
+        this.data1.victoriasJugador =
+          this.data1.totalJuegos - this.data1.victoriasCroupier;
+        this.loadReport1(this.data1);
+      },
+      error: (err) => {
+        console.log('Error report1: ', err);
+      },
+    });
+
+    this.apiReportes.getReporte2().subscribe({
+      next: (resp) => {
+        resp.data.forEach((data: Reporte2) => {
+          this.data2.push({date: this.datePipe.transform(data.date,'dd/MM')!, cantidadJuegos: data.cantidadJuegos, cantidadJugadores: data.cantidadJugadores})
+        });
+        this.loadReport2(this.data2);
+      },
+      error: (err) => {
+        console.log('Error report2: ', err);
+      },
+    });
+
+    this.apiReportes.getReporte3().subscribe({
+      next: (resp) => {
+        this.data3 = resp.data;
+      },
+      error: (err) => {
+        console.log('Error report3: ', err);
+      },
+    });
   }
 
-  loadReports(){
-
-    this.apiReportes.getReporte1()
-             .subscribe({
-              next:(resp)=>{
-                this.data1=resp
-              },
-              error:(err)=>{
-                console.log('Error report1: ', err)
-              }
-              });
-              
-    this.apiReportes.getReporte2() 
-              .subscribe({
-               next:(resp)=>{
-                  this.data2=resp
-                },
-                error:(err)=>{
-                  console.log('Error report2: ', err)
-                }
-                });
-
-    this.apiReportes.getReporte3()
-              .subscribe({
-                next:(resp)=>{
-                  this.data3=resp
-                },
-                error:(err)=>{
-                  console.log('Error report3: ', err)
-                }
-                })
+  loadReport1(data: any) {
+    this.pieChartData = {
+      ...this.pieChartData,
+      datasets: [
+        {
+          ...this.pieChartData.datasets[0],
+          data: [data.victoriasCroupier, data.victoriasJugador],
+        },
+      ],
+    };
   }
-  
+
+  loadReport2(data: any) {
+    this.barChartData = {
+      ...this.barChartData,
+      labels: data.map((x: any) => x.date),
+      datasets: [
+        {
+          ...this.barChartData.datasets[0],
+          data: data.map((x: any) => x.cantidadJugadores),
+        },
+        {
+          ...this.barChartData.datasets[1],
+          data: data.map((x: any) => x.cantidadJuegos),
+        },
+      ],
+    };
+  }
+
   public pieChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     plugins: {
       legend: {
         display: true,
         position: 'top',
-      }
-    }
+      },
+    },
   };
   public pieChartData: ChartData<'pie', number[], string | string[]> = {
-    labels: [ [ 'Casa Gana' ], [ 'Jugador Gana' ]],
-    datasets: [ {
-      data: [ 300, 500 ]  //Obtenemos de acá el primer reporte
-    } ]
+    labels: [['Casa Gana'], ['Jugador Gana']],
+    datasets: [
+      {
+        data: [],
+      },
+    ],
   };
   public pieChartType: ChartType = 'pie';
 
@@ -78,31 +111,34 @@ export class ReportsComponent implements OnInit {
     scales: {
       x: {},
       y: {
-        min: 10
-      }
+        min: 0,
+      },
     },
     plugins: {
       legend: {
         display: true,
-      }
-    }
+      },
+    },
   };
-  
+
   public barChartType: ChartType = 'bar';
   public barChartData: ChartData<'bar'> = {
-    labels: [ '07/11', '08/11', '09/11', '10/11', '11/11', '12/11', '13/11' ],
+    labels: [],
     datasets: [
-      { data: [ 65, 59, 80, 81, 56, 55, 40 ], label: 'Jugadores' },
-      { data: [ 28, 48, 40, 19, 86, 27, 90 ], label: 'Juegos' }
-    ]
-  };  
+      { data: [], label: 'Jugadores' },
+      { data: [], label: 'Juegos' },
+    ],
+  };
 
-  public doughnutChartLabels: string[] = [ 'Black Jacks Jugadores', 'Black Jacks Casa' ];
+  public doughnutChartLabels: string[] = [
+    'Black Jacks Jugadores',
+    'Black Jacks Casa',
+  ];
   public doughnutChartData: ChartData<'doughnut'> = {
     labels: this.doughnutChartLabels,
     datasets: [
-      { data: [ 350, 450] }, //3er reporte
-    ]
+      { data: [350, 450] }, //3er reporte
+    ],
   };
   public doughnutChartType: ChartType = 'doughnut';
 }

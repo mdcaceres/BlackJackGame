@@ -14,6 +14,7 @@ export class ReportsComponent implements OnInit {
   data1: Reporte1 = {} as Reporte1;
   data2: Reporte2[] = [];
   data3: any[] = [];
+  data4: any[] = [];
 
   constructor(private apiReportes: ReportService, private datePipe: DatePipe) {}
 
@@ -85,6 +86,22 @@ export class ReportsComponent implements OnInit {
       ],
     };
   }
+  loadReport3(data: any) {
+    this.barChartData = {
+      ...this.barChartData,
+      labels: data.map((x: any) => x.date),
+      datasets: [
+        {
+          ...this.barChartData.datasets[0],
+          data: data.map((x: any) => x.cantidadJugadores),
+        },
+        {
+          ...this.barChartData.datasets[1],
+          data: data.map((x: any) => x.cantidadJuegos),
+        },
+      ],
+    };
+  }
 
   public pieChartOptions: ChartConfiguration['options'] = {
     responsive: true,
@@ -129,16 +146,29 @@ export class ReportsComponent implements OnInit {
       { data: [], label: 'Juegos' },
     ],
   };
-
-  public doughnutChartLabels: string[] = [
-    'Black Jacks Jugadores',
-    'Black Jacks Casa',
-  ];
-  public doughnutChartData: ChartData<'doughnut'> = {
-    labels: this.doughnutChartLabels,
+  public barChartData2: ChartData<'bar'> = {
+    labels: [],
     datasets: [
-      { data: [350, 450] }, //3er reporte
+      { data: [], label: 'BlackJacks' },
+      { data: [], label: 'Victorias' },
     ],
   };
-  public doughnutChartType: ChartType = 'doughnut';
+  public barChartData3: ChartData<'bar'> = {
+    labels: [],
+    datasets: [
+      { data: [], label: 'BlackJacks' },
+      { data: [], label: 'Victorias' },
+    ],
+  };
+  // public doughnutChartLabels: string[] = [
+  //   'Black Jacks Jugadores',
+  //   'Black Jacks Casa',
+  // ];
+  // public doughnutChartData: ChartData<'doughnut'> = {
+  //   labels: this.doughnutChartLabels,
+  //   datasets: [
+  //     { data: [350, 450] }, //3er reporte
+  //   ],
+  // };
+  // public doughnutChartType: ChartType = 'doughnut';
 }

@@ -116,15 +116,18 @@ WHERE g.id = '1'
 
     const { id } = req.params;
     const {result}=req.body;
+    const isBlackJack= req.body.isBlackJack ||0
+
+  
 
     const gameExists = await pool.query("SELECT * FROM games WHERE id= ?", id)
-
+    
     if (gameExists.length == 0){
         response.error=true;
         response.data= { msg: "Game not found" }
         return res.status(404).json(response)
     }
-     await pool.query("UPDATE games SET idResultType = ? WHERE id = ?",[result, id] )
+     await pool.query("UPDATE games SET idResultType = ?, isBlackJack = ? WHERE id = ?",[result, isBlackJack, id] )
       .then( result =>{
         response.data= {msg:`Game: ${id} was updated`}
         res.status(200).json(response);

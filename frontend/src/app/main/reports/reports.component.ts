@@ -3,6 +3,8 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { Reporte1 } from 'src/app/interfaces/report1';
 import { Reporte2 } from 'src/app/interfaces/report2';
+import { Reporte3Croupier } from 'src/app/interfaces/report3Croupier';
+import { Reporte3Player } from 'src/app/interfaces/report3Player';
 import { ReportService } from 'src/app/services/report.service';
 
 @Component({
@@ -13,8 +15,9 @@ import { ReportService } from 'src/app/services/report.service';
 export class ReportsComponent implements OnInit {
   data1: Reporte1 = {} as Reporte1;
   data2: Reporte2[] = [];
-  data3: any[] = [];
-  data4: any[] = [];
+  //reporte 3
+  data3: Reporte3Player   = {}as Reporte3Player;
+  data4: Reporte3Croupier = {}as Reporte3Croupier;
 
   constructor(private apiReportes: ReportService, private datePipe: DatePipe) {}
 
@@ -50,11 +53,16 @@ export class ReportsComponent implements OnInit {
 
     this.apiReportes.getReporte3().subscribe({
       next: (resp) => {
-        this.data3 = resp.data;
+          resp.data.map((x: any)=>{
+            this.data3.BjPlayer=x.BjPlayer
+            this.data3.VictoriasPlayer=x.VictoriasPlayer
+            this.data4.BjCroupier=x.BjCroupier
+            this.data4.VictoriasCroupier=x.VictoriasCroupier
+          })
       },
       error: (err) => {
         console.log('Error report3: ', err);
-      },
+      }
     });
   }
 
@@ -86,18 +94,19 @@ export class ReportsComponent implements OnInit {
       ],
     };
   }
-  loadReport3(data: any) {
-    this.barChartData = {
-      ...this.barChartData,
-      labels: data.map((x: any) => x.date),
+  loadReport3(dataPlayer: Reporte3Player, dataCroupier:Reporte3Croupier) {
+    
+    this.barChartData2 = {
+      ...this.barChartData2,
+      labels: ["Croupier", "Jugador"],
       datasets: [
         {
-          ...this.barChartData.datasets[0],
-          data: data.map((x: any) => x.cantidadJugadores),
+          ...this.barChartData2.datasets[0],
+          data: [dataCroupier.BjCroupier, dataPlayer.BjPlayer],
         },
         {
-          ...this.barChartData.datasets[1],
-          data: data.map((x: any) => x.cantidadJuegos),
+          ...this.barChartData2.datasets[1],
+          data: [dataCroupier.VictoriasCroupier, dataPlayer.VictoriasPlayer],
         },
       ],
     };

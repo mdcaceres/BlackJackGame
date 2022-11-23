@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   url:'https://63378fb95327df4c43d54e96.mockapi.io/api/blackjack/cards',
-  urlAPI:"http://localhost:7466/api/" 
+  urlAPI:"http://localhost:5832/api/" 
 };
 
 /*

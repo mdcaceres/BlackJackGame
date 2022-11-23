@@ -59,7 +59,10 @@ export class ReportsComponent implements OnInit {
             this.data4.BjCroupier=x.BjCroupier
             this.data4.VictoriasCroupier=x.VictoriasCroupier
           })
-      },
+          console.log("reporte 3 player",this.data3)
+          console.log("reporte 3 croupier",this.data4)
+          this.loadReport3(this.data3, this.data4);
+        },
       error: (err) => {
         console.log('Error report3: ', err);
       }
@@ -162,13 +165,13 @@ export class ReportsComponent implements OnInit {
       { data: [], label: 'Victorias' },
     ],
   };
-  public barChartData3: ChartData<'bar'> = {
-    labels: [],
-    datasets: [
-      { data: [], label: 'BlackJacks' },
-      { data: [], label: 'Victorias' },
-    ],
-  };
+  // public barChartData3: ChartData<'bar'> = {
+  //   labels: [],
+  //   datasets: [
+  //     { data: [], label: 'BlackJacks' },
+  //     { data: [], label: 'Victorias' },
+  //   ],
+  // };
   // public doughnutChartLabels: string[] = [
   //   'Black Jacks Jugadores',
   //   'Black Jacks Casa',

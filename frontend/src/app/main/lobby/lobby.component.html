@@ -11,7 +11,7 @@
             <h1>Historial de Partidas</h1>
           </div>
         <div class="col">
-          <button class="btn btn-light btn-sm" type="button" id="logout" (click)="logout()">Cerrar Sesión</button>
+          <button class="btn btn-light btn-sm mt-3" type="button" id="logout" (click)="logout()">Cerrar Sesión</button>
         </div>
     </div>
     <div class="row">
@@ -28,7 +28,7 @@
               <tr *ngFor="let game of games" [ngClass]="{'table-warning': game.result=== 'pending','table-success': game.result === 'win','table-danger': game.result === 'lose', 'table-secondary': game.result === 'draw' }">
                 <th scope="row">{{game.gameID}}</th>
                 <td>{{game.playerName}}</td>
-                <td>{{game.result}}</td>
+                <td>{{game.result === 'win' ? 'Victoria' : game.result === 'lost' ?  'Derrota':'Empate' }}</td>
               </tr>
             </tbody>
           </table>
